@@ -25,9 +25,11 @@ exports.proto = object.create(events.proto, {
     @description  initialises the object
     @param        {string} uuid
   */
-  init: function(uuid) {
+  init: function(data) {
 
-    this.uuid = uuid;
+    this.uuid = data.uuid;
+    this.region = data.region;
+    this.entityType = data.type + "/" + data.object;
     this.callProto("init");
     this.children = [];
     return this;
@@ -161,7 +163,7 @@ exports.proto = object.create(events.proto, {
         container = $('*[data-region="' + region + '"]', that.rootNode)[0];
       }
       if(typeof container === "undefined") {
-        throw new ReferenceError("ui/proto#render region '" + region + "'' does not exist");
+        throw new Error(that.entityType + "#render region '" + region + "'' does not exist");
       }
       
       child.render();

@@ -13,21 +13,22 @@ var util		= require("util"),
 var file = new(static.Server)('htdocs', { cache: 0, headers: {'X-Hello':'World!'} });
 
 server = http.createServer(function (request, response) {
-    request.addListener('end', function () {
-        //
-        // Serve files!
-        //
-        file.serve(request, response, function (err, res) {
-            if (err) { // An error as occured
-                console.error("> Error serving " + request.url + " - " + err.message);
-                response.writeHead(err.status, err.headers);
-                response.end();
-            }
+  
+  request.addListener('end', function () {
+    //
+    // Serve files!
+    //
+    file.serve(request, response, function (err, res) {
+      if (err) { // An error as occured
+        console.error("> Error serving " + request.url + " - " + err.message);
+        response.writeHead(err.status, err.headers);
+        response.end();
+      }
 			else { // The file was served successfully
-                console.log("> " + request.url + " - " + res.message);
-            }
-        });
+        console.log("> " + request.url + " - " + res.message);
+      }
     });
+  });
 });
 
 server.listen(8080);
@@ -43,17 +44,17 @@ listener.on('connection', function(client) {
 	if (listener.clients.length > 0) {
 		var count = listener.clients.length;
 		while (count--) {
-		    if (listener.clients[count] != null && this.clients[count] != client) {
+		  if (listener.clients[count] !== null && this.clients[count] != client) {
 				listener.clients[count].broadcast(json({ action: 'fetch' }));
 				return;
-		    }
+		  }
 		}
-    }
+  }
     
-    client.on('message', function(msg) {
-		console.log(util.inspect(msg));
+  client.on('message', function(msg) {
+    console.log(util.inspect(msg));
 		client.broadcast(msg);
-    });
+  });
 
 	client.send({
 		type: "initialiseClient",

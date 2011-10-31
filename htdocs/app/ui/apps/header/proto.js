@@ -13,7 +13,13 @@ define("/app/ui/apps/header/proto",
 		exports.proto = object.create(apps.proto, {
 		  
 		  //  properties
-		  html: '<header class="apps header" data-region="default"></header>'
+		  html: [
+		          '<header class="apps header">',
+		          '<div data-region="logo"></div>',
+		          '<h1 data-region="header"></h1>',
+		          '<h2 data-region="description"></h2>',
+		          '</header>'
+		        ].join("")
 		
 		  //  public
 		
