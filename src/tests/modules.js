@@ -7,12 +7,10 @@
   
 */
 
-//  specs
-//r/equire("/tests/specs/events");
-//r/equire("/tests/specs/sys");
-//r/equire("/tests/specs/app/ui/proto");
-require("/tests/specs/app/ui/layouts/proto");
-
+//  unit tests
+require("/tests/unit");
+require("/tests/ui");
+require("/tests/integration");
 
 
 //  do not delete

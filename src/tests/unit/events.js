@@ -61,7 +61,7 @@ describe("events", function() {
 
   });
 
-  it("events#on should register an listeners for different events", function() {
+  it("events#on should register listeners for different events", function() {
     
     ev.on("test.event.1", function() {});
     ev.on("test.event.2", function() {});
@@ -71,7 +71,7 @@ describe("events", function() {
 
   });
 
-  it("events#once should register an listeners for different events", function() {
+  it("events#once should register listeners for different events", function() {
     
     ev.once("test.event.1", function() {});
     ev.once("test.event.2", function() {});
@@ -80,6 +80,74 @@ describe("events", function() {
     expect(ev._listeners.once["test.event.2"].length).toEqual(1);
 
   });
+
+
+
+  it("events#on should return an event handler object", function() {
+    
+    var e = ev.on("test.event.1", function() {});
+
+    expect(typeof e.start === "function").toEqual(true);
+    expect(typeof e.stop === "function").toEqual(true);
+
+  });
+
+
+  it("events#once should return an event handler object", function() {
+    
+    var e = ev.once("test.event.1", function() {});
+
+    expect(typeof e.start === "function").toEqual(true);
+    expect(typeof e.stop === "function").toEqual(true);
+
+  });
+
+
+  it("eventhandler#stop stops an event listener listening", function() {
+    
+    var spy, e;
+
+    spy = sinon.spy();
+    e = ev.on("test.event.1", spy);
+
+    ev.fire("test.event.1");
+
+    e.stop();
+
+    ev.fire("test.event.1");
+    ev.fire("test.event.1");
+
+    expect(spy.calledOnce).toEqual(true);
+    expect(spy.calledTwice).not.toEqual(true);
+    expect(spy.calledThrice).not.toEqual(true);
+
+  });
+
+  it("eventhandler#start starts an event listener listening", function() {
+    
+    var spy, e;
+
+    spy = sinon.spy();
+    e = ev.on("test.event.1", spy);
+
+    ev.fire("test.event.1");
+
+    e.stop();
+
+    ev.fire("test.event.1");
+    ev.fire("test.event.1");
+    ev.fire("test.event.1");
+
+    e.start();
+
+    ev.fire("test.event.1");
+
+    expect(spy.calledOnce).not.toEqual(true);
+    expect(spy.calledTwice).toEqual(true);
+    expect(spy.calledThrice).not.toEqual(true);
+
+  });
+
 
   it("events#fire should call the on listeners repeatedly", function() {
     
@@ -161,7 +229,7 @@ describe("events", function() {
   });
 
 
-  it("event#stopPropogation stop the event propogating", function() {
+  it("event#stopPropogation stops the event propogating", function() {
     
     var spy1, spy2, l1, l2;
 
@@ -215,4 +283,35 @@ describe("events", function() {
     expect(e.defaultPrevented).toEqual(true);
 
   });
+
+
+  it("event#_autoBindListeners should automatically bind listeners", function() {
+    
+    var ev, spy1, spy2;
+
+    ev = object.create(events.proto, {
+      
+      "__test.auto.1__": function(e) {
+        
+      },
+
+      "__test.auto.2__": function(e) {
+        
+      }
+
+    }).init();
+
+    spy1 = sinon.spy(ev, "__test.auto.1__");
+    spy2 = sinon.spy(ev, "__test.auto.2__");
+
+    ev.fire("test.auto.1");
+    ev.fire("test.auto.2");
+
+    expect(spy1.calledOnce).toEqual(true);
+    expect(spy2.calledOnce).toEqual(true);
+
+  });
+
+
+
 });

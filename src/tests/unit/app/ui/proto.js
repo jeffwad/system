@@ -16,7 +16,9 @@ describe("/ui/proto", function() {
 
   beforeEach(function() {
 
-    entity = object.create(ui.proto).init("01234");
+    entity = object.create(ui.proto).init({
+      uuid: "01234"
+    });
 
   });
 
@@ -48,56 +50,123 @@ describe("/ui/proto", function() {
   });
 
 
-  it("ui/proto#render should throw an error if not passed a domnode", function() {
-
-    var spy = sinon.spy(entity, "render");    
-    try{
-      entity.render({});
-    }
-    catch(e) {}
-    expect(spy.threw("TypeError")).toEqual(true);
-  });
-
   it("ui/proto#render should throw an error if the object has no html property", function() {
 
     var spy = sinon.spy(entity, "render");    
     try{
-      entity.render(document.createElement("div"));
+      entity.render();
     }
     catch(e) {}
     expect(spy.threw()).toEqual(true);
 
   });
 
+
+  it("ui/proto#render should append it's rootNode to a domNode if passed passed a domNode", function() {
+
+    var domNode = document.createElement("div");
+    entity.html = "<div class=\"test-root\"></div>";    
+    entity.render(domNode);
+    
+    expect(domNode.innerHTML).toEqual("<div class=\"test-root\"></div>");
+
+  });
+
+
+  it("ui/proto#_render should convert it's html property to it's rootNode", function() {
+
+    entity.html = "<div class=\"test-root\"></div>";
+    entity.render();
+    
+    expect(entity.rootNode.className).toEqual("test-root");
+
+  });
+
+
+  it("ui/proto#_renderChildren should render a child to the default region", function() {
+
+    var child;
+
+    child = object.create(ui.proto, {
+      html: "<div class=\"child\"></div>"
+    }).init("child");
+
+    entity.registerChild(child);
+
+    entity.html = "<div data-region=\"default\"></div>";
+    entity._render();
+    entity._renderChildren();
+    expect(entity.rootNode.innerHTML).toEqual("<div class=\"child\"></div>");
+
+  });
+
+
+  it("ui/proto#_renderChildren should render a child to a specified region", function() {
+
+    var child;
+
+    child = object.create(ui.proto, {
+      html: "<div class=\"child\"></div>"
+    }).init({
+      uuid: "child",
+      region: "test"
+    });
+
+    entity.registerChild(child);
+
+    entity.html = "<div data-region=\"test\"></div>";
+    entity._render();
+    entity._renderChildren();
+    expect(entity.rootNode.innerHTML).toEqual("<div class=\"child\"></div>");
+
+  });
+
+
+  it("ui/proto#_renderChildren should render multiple children", function() {
+
+    var child;
+
+    child = object.create(ui.proto, {
+      html: "<div class=\"child\"></div>"
+    }).init("child");
+
+    entity.registerChild(child);
+    entity.registerChild(child);
+    entity.registerChild(child);
+
+
+    entity.html = "<div data-region=\"default\"></div>";
+    entity._render();
+    entity._renderChildren();
+    expect(entity.rootNode.innerHTML).toEqual("<div class=\"child\"></div><div class=\"child\"></div><div class=\"child\"></div>");
+
+  });
+
   it("ui/proto#_render should throw en error if the region cannot be found", function() {
 
-    var root, spy;
+    var child, spy;
 
-    spy = sinon.spy(entity, "_render");    
-    root = document.createElement("div");
+    spy = sinon.spy(entity, "_renderChildren");
 
-    root.innerHTML = "<div data-region=\"test\"></div>";
-    entity.html = "<div>test _render()</div>";
-    entity.region = "tes3t";
+    child = object.create(ui.proto, {
+      region: "cannot-be-found",
+      html: "<div class=\"child\"</div>"
+    }).init("child");
+
+    entity.registerChild(child);
+
+    entity.html = "<div data-region=\"test\"></div>";
+    entity._render();
     try {
-      entity._render(root);
+      entity._renderChildren();
     }
-    catch(e){}
-    expect(spy.threw("ReferenceError")).toEqual(true);
+    catch(e) {
+      expect(spy.threw()).toEqual(true);  
+    }
+    
 
   });
 
-  it("ui/proto#_render should render some mark up to the specified region", function() {
-
-    var root = document.createElement("div");
-
-    root.innerHTML = "<div data-region=\"test\"></div>";
-    entity.html = "<div>test _render()</div>";
-    entity.region = "test";
-    entity._render(root);
-    expect(entity.rootNode.innerHTML).toEqual("<div>test _render()</div>");
-
-  });
 
   it("ui/proto#registerChild should not register a child object of the wrong type", function() {
 
@@ -218,5 +287,29 @@ describe("/ui/proto", function() {
     expect(spy.args[0][0].phase).toEqual("capture");
 
   });
+
+
+  it("ui/proto#show set show the object", function() {
+    
+    entity.html = "<div data-region=\"default\"></div>";
+    entity._render();
+    entity.rootNode.style.display = "none";
+
+    entity.show();
+    expect(entity.rootNode.style.display).toEqual("block");
+
+  });
+
+  it("ui/proto#hide set hide the object", function() {
+    
+    entity.html = "<div data-region=\"default\"></div>";
+    entity._render();
+
+    entity.hide();
+    expect(entity.rootNode.style.display).toEqual("none");
+
+  });
+
+
 
 });

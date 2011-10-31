@@ -24,3 +24,25 @@ create
 	command
 	sequence
 	module
+
+
+
+application
+
+	ui state: map events to levels.
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

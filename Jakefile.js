@@ -32,7 +32,6 @@ namespace("build", function() {
       copyFile(__dirname + "/src/index.html");
       copyFile(__dirname + "/src/index.debug.html");
       buildFiles(__dirname + "/src/app/main.js");
-      buildFiles(__dirname + "/src/app/main2.js");
       //buildFiles(__dirname + "/src/tests/modules.js");
       //copyFile(__dirname + "/src/tests/runner.html");
 

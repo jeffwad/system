@@ -365,17 +365,6 @@
     };
   }
 
-/*
-  var data = {};
-  this.attr = function(key, value) {
-    if(arguments.length === 1) {
-      return data[key][0];
-    }
-    else {
-      data[key].unshift(value);
-    }
-  };
-*/
   promise = {
 
     init: function() {
@@ -416,7 +405,7 @@
           if (typeof f === "function") {
             res = f(res) || result;
           }
-        })();
+        }());
       }
       this.result = res;
 
@@ -639,15 +628,36 @@
         on: {},
         once: {}
       };
+
+      this._autoBindListeners();
+
       return this;
     },
+
 
     fire: function(type, data) {
       
       return this._fire(create(event).init(type, data));
 
-    }, 
+    },
 
+
+    _autoBindListeners: function() {
+      
+      var that = this;
+
+      this._handlers = {};
+
+      forEach(this, function(member, name) {
+        if(typeof member === "function" && /^__(.+)__$/.test(name)) {
+          var event = RegExp.$1;
+          that._handlers[event] = that.on(event, function(e) {
+            that[name](e);
+          });
+        }
+      });
+
+    },
 
     _fire: function(e) {
 
@@ -723,7 +733,7 @@
 
     preventDefault: function() {
 
-      this.propogationStopped = true;
+      this.stopPropogation();
       this.defaultPrevented = true;
 
     }

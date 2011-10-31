@@ -28,7 +28,8 @@ exports.proto = object.create(events.proto, {
   init: function(data) {
 
     this.uuid = data.uuid;
-    this.region = data.region;
+    this.region = data.region || "";
+    this.event = data.event || false;
     this.entityType = data.type + "/" + data.object;
     this.callProto("init");
     this.children = [];
@@ -63,6 +64,15 @@ exports.proto = object.create(events.proto, {
 
 
   /*
+    @description  hides the ui entity
+  */
+  hide: function() {
+    $(this.rootNode).hide();
+  },
+
+
+
+  /*
     @description  registers a child ui object with this object
     @param        {object} child an object implementing this on it's prototype
   */
@@ -74,6 +84,7 @@ exports.proto = object.create(events.proto, {
     this.children.push(child);
 
   },
+
 
 
   /*
@@ -90,8 +101,9 @@ exports.proto = object.create(events.proto, {
   },
 
 
+
   /*
-    @description  checks that all the render data is correct and then delegates to a private render method
+    @description  checks that all the render data is correct and then delegates to a private _render method
     @param        {domNode} root 
   */
   render: function(root) {
@@ -100,10 +112,7 @@ exports.proto = object.create(events.proto, {
       throw new Error("ui/proto#html has not been set");
     }
 
-    this.rootNode = document.createElement("div");
-    this.rootNode.innerHTML = this.html;
-    this.rootNode = $(" > *", this.rootNode)[0];
-
+    this._render();
     this._renderChildren();      
 
     //  if we were passed a root node, append to it
@@ -112,6 +121,15 @@ exports.proto = object.create(events.proto, {
     }
   
   },
+
+
+  /*
+    @description  shows the ui entity
+  */
+  show: function() {
+    $(this.rootNode).show();
+  },
+
 
 
   //  private
@@ -147,6 +165,23 @@ exports.proto = object.create(events.proto, {
     return e;
   },
 
+
+  /*
+    @description  renders it's template and sets the rootNode
+  */
+  _render: function() {
+
+    this.rootNode = document.createElement("div");
+    this.rootNode.innerHTML = this.html;
+    this.rootNode = $(" > *", this.rootNode)[0];
+
+  },
+
+
+  /*
+    @description  renders all registered children into the specified or default regions
+                  of it's rootNode
+  */
   _renderChildren: function() {
     
     var that = this;

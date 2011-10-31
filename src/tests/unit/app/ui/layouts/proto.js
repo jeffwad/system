@@ -16,7 +16,9 @@ describe("/ui/layouts/proto/", function() {
 
   beforeEach(function() {
 
-    entity = object.create(layouts.proto).init("01234");
+    entity = object.create(layouts.proto).init({
+      uuid: "01234"
+    });
 
   });
 
@@ -44,30 +46,6 @@ describe("/ui/layouts/proto/", function() {
 
     expect(entity.uuid).toEqual("01234");
     expect(entity.children).toEqual([]);
-
-  });
-
-
-  it("ui/layouts/proto#_render should render child objects one after another", function() {
-
-    var child1, child2, child3;
-
-    entity.html = "<div></div>";
-    child1._render(entity.rootNode);
-
-    expect(spy.threw("ReferenceError")).toEqual(true);
-
-  });
-
-  it("ui/layouts/proto#_render should render some mark up to the specified region", function() {
-
-    var root = document.createElement("div");
-
-    root.innerHTML = "<div data-region=\"test\"></div>";
-    entity.html = "<div>test _render()</div>";
-    entity.region = "test";
-    entity.render(root);
-    expect(entity.rootNode.innerHTML).toEqual("<div>test _render()</div>");
 
   });
 

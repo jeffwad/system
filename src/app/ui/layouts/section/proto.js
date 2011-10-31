@@ -8,6 +8,9 @@
 */
 var object  = require("object"),
     layouts = require("/app/ui/layouts/proto"),
+    iter    = require("iter"),
+    forEach = iter.forEach,
+    some    = iter.some,
     $       = require("/lib/dom").$;
 
 exports.proto = object.create(layouts.proto, {
@@ -17,12 +20,57 @@ exports.proto = object.create(layouts.proto, {
 
   //  public
 
+ 
   //  private
 
-  //  handlers
-  "__state.control.change__": function(e) {
+  /*
+    @description  plucks the selected child from the children array
+    @param        {object} e
+    @return       {child} object
+   */
+  _getSelectedChild: function(e) {
+  
+    var selected;
+
+    some(this.children, function(child) {
+      selected = child;
+      return child.event === e.data.event;
+    });
     
-    //  do some shit here
+    return selected;
+    
+  },
+
+
+ /*
+    @description  displays the selected child and hides the others
+    @param        {object} child
+   */
+  _selectChild: function(child) {
+    
+    forEach(this.children, function(child) {
+      child.hide();
+    });
+    
+    child.show();
+    
+  },
+
+ 
+  //  auto bind event handlers
+
+  /*
+    @description  responds to a state change event and displays the associated child
+    @param        {object} e
+  */
+  "__state.control.change__": function(e) {
+
+    var selectedChild = this._getSelectedChild(e);
+
+    if(this._currentChild !== selectedChild) {
+      this._selectChild(selectedChild);
+      this._currentChild = selectedChild;
+    }
 
   }
 
