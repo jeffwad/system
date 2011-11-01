@@ -644,18 +644,17 @@
 
     _autoBindListeners: function() {
       
-      var that = this;
+      var i, that = this;
 
       this._handlers = {};
-
-      forEach(this, function(member, name) {
+      for(i in this) (function(member, name) {
         if(typeof member === "function" && /^__(.+)__$/.test(name)) {
           var event = RegExp.$1;
           that._handlers[event] = that.on(event, function(e) {
             that[name](e);
           });
         }
-      });
+      }(this[i], i));
 
     },
 
