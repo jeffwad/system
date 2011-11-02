@@ -21,7 +21,6 @@ exports.create = function(data) {
   var app = apps[data.object].proto;
 
   if(typeof app === "undefined") {
-    console.log("app/ui/apps/factory cannot create object: " + data.object);
     throw new TypeError("app/ui/apps/factory cannot create object: " + data.object);
   }
   return object.create(app).init(data);

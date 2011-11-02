@@ -19,7 +19,6 @@ exports.create = function(data) {
   var layout = layouts[data.object].proto;
 
   if(typeof layout === "undefined") {
-    console.log("app/ui/layouts/factory cannot create object: " + data.object);
     throw new TypeError("app/ui/layouts/factory cannot create object: " + data.object);
   }
   return object.create(layout).init(data);  

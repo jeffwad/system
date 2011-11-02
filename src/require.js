@@ -213,13 +213,13 @@
     }
   }
 
-  function forEach(o, func, scope) {
+  function forEach(o, func) {
     if(typeof o.forEach === 'function') {
-      o.forEach(func, scope);
+      o.forEach(func);
     }
     else {
       exhaust(o, function(value, key){
-        func.call(scope, value, key);
+        func(value, key);
       });
     }
   }
@@ -320,9 +320,30 @@
     return ret;
   }
 
-  function reduce(ret, o, func, scope){
-    exhaust(o, function(value, key){
-      ret = func.call(scope, ret, value, key);
+  function reduce(ret, o, func){
+
+    var iterable;
+
+    if(arguments.length < 3) {
+
+      iterable = iterator(ret);
+      func = o;
+      try {
+        ret = iterable.next();
+      }
+      catch (e) {
+        if (e === StopIteration) {
+          throw new TypeError("reduce() of sequence with no initial value");
+        }
+        throw e;
+      }
+    } 
+    else {
+      iterable = iterator(o);
+    }
+
+    exhaust(iterable, function(value, key){
+      ret = func(ret, value, key);
     });
     return ret;
   }

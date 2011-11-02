@@ -10,28 +10,37 @@ var factories = {
       layouts     : require("/app/ui/layouts/factory"),
       apps        : require("/app/ui/apps/factory"),
       components  : require("/app/ui/components/factory")
-    };
+    },
+    reduce  = require("iter").reduce;
 
-exports.create = function(data) {
+function create(data) {
     
   var fac = factories[data.type];
   
   if(typeof fac === "undefined") {
+    console.log("app/ui/factory cannot load factory of type: " + data.type);
     throw new TypeError("app/ui/factory cannot load factory of type: " + data.type);
   }
 
   return fac.create(data);
 
-};
+}
 
-exports.getChildren = function(data) {
+function build(tree) {
+  
+  return reduce(tree, function(ret, leaf) {
+
+    var entity = create(leaf);
+    if(leaf.children) {
+      entity.registerChild(build(leaf.children));
+    }
+    return entity;
+  });
+
+}
+
+exports.build = function(tree) {
     
-  return data.children || false;
-
-};
-
-exports.addChild = function(parent, child) {
-    
-  parent.registerChild(child);
+  return build([tree]);
 
 };

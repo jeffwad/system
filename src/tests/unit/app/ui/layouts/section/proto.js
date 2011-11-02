@@ -95,42 +95,58 @@ describe("/ui/layouts/section/proto", function() {
   });
 
 
-  it("ui/layouts/section/proto should display the first child only", function() {
+  it("ui/layouts/section/proto#_selectChild should display the first child only", function() {
+
+    section._selectChild(section.children[0]);
+    expect(section.children[0].rootNode.style.display).toEqual("block");
+    expect(section.children[1].rootNode.style.display).toEqual("none");
+    expect(section.children[2].rootNode.style.display).toEqual("none");
+  });
+
+  it("ui/layouts/section/proto#_selectChild should display the second child only", function() {
+
+    section._selectChild(section.children[1]);
+    expect(section.children[0].rootNode.style.display).toEqual("none");
+    expect(section.children[1].rootNode.style.display).toEqual("block");
+    expect(section.children[2].rootNode.style.display).toEqual("none");
+  });
+
+  it("ui/layouts/section/proto#_selectChild should display the third child only", function() {
+
+    section._selectChild(section.children[2]);
+    expect(section.children[0].rootNode.style.display).toEqual("none");
+    expect(section.children[1].rootNode.style.display).toEqual("none");
+    expect(section.children[2].rootNode.style.display).toEqual("block");
+  });
+
+
+  it("ui/layouts/section/proto#__state.control.change__ should set the currentChild to the first", function() {
 
     section.fire("state.control.change", {
       event: "section-one"
     });
 
     expect(section._currentChild).toEqual(section.children[0]);
-    expect(section.children[0].rootNode.style.display).toEqual("block");
-    expect(section.children[1].rootNode.style.display).toEqual("none");
-    expect(section.children[2].rootNode.style.display).toEqual("none");
   });
 
 
-  it("ui/layouts/section/proto should display the second child only", function() {
+  it("ui/layouts/section/proto#__state.control.change__ should set the currentChild to the second", function() {
     
     section.fire("state.control.change", {
       event: "section-two"
     });
 
     expect(section._currentChild).toEqual(section.children[1]);
-    expect(section.children[0].rootNode.style.display).toEqual("none");
-    expect(section.children[1].rootNode.style.display).toEqual("block");
-    expect(section.children[2].rootNode.style.display).toEqual("none");
   });
 
 
-  it("ui/layouts/section/proto should display the third child only", function() {
+  it("ui/layouts/section/proto#__state.control.change__ should set the currentChild to the third", function() {
     
     section.fire("state.control.change", {
       event: "section-three"
     });
 
     expect(section._currentChild).toEqual(section.children[2]);
-    expect(section.children[0].rootNode.style.display).toEqual("none");
-    expect(section.children[1].rootNode.style.display).toEqual("none");
-    expect(section.children[2].rootNode.style.display).toEqual("block");
   });
 
 

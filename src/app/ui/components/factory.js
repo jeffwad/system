@@ -19,7 +19,6 @@ exports.create = function(data) {
   var component = components[data.object].proto;
 
   if(typeof component === "undefined") {
-    console.log("app/ui/components/factory cannot create object: " + data.object);
     throw new TypeError("app/ui/components/factory cannot create object: " + data.object);
   }
   return object.create(component).init(data);  

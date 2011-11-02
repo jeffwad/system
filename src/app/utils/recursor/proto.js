@@ -24,7 +24,7 @@ exports.proto = {
     return this;
   },
 
-  parse: function(data) {
+  walk: function(data) {
 
     return this._createEntity(data);
     
@@ -34,30 +34,23 @@ exports.proto = {
 
     var that = this,
         entity, 
-        fac,
         children;
     
     entity = this._factory.create(data);
 
-    children = this._getChildren(data);
+    children = this._factory.getChildren(data);
 
     if(children) {
 
       forEach(children, function(child) {
         
-        entity.registerChild(that._createEntity(child));
+        that._factory.addChild(entity, that._createEntity(child));
 
       });
     
     }
     
     return entity;
-  },
-
-  _getChildren: function(data) {
-    
-    return data.children || false
-
   }
 
 };

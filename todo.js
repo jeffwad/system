@@ -30,7 +30,9 @@ create
 application
 
 	ui state: map events to levels.
-	
+	components
+	data binding
+	vagrant the server
 
 
 

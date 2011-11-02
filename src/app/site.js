@@ -11,7 +11,7 @@ exports.site = {
   "client": {
     "uuid": "67092CAC-5035-46B0-9ED5-88E026EFDDFE"
   },
-  "entity": {
+  "root": {
     "uuid"    : "BC1F88E6-DB02-466D-A3D2-43D28C73638A",
     "type"    : "layouts",
     "object"  : "split-vertical",
@@ -91,9 +91,9 @@ exports.site = {
             "children": [
               {
                 "uuid"    : "29C1403F-9357-446B-AFCC-DE7A3FECC6E6",
-                "type"  : "apps",
-                "limit" : "10",
-                "object": "list"
+                "type"    : "apps",
+                "limit"   : "10",
+                "object"  : "list"
               },
               {
                 "uuid"    : "542CE94A-7F06-4AEF-9DFE-379B50E2F1FA",
