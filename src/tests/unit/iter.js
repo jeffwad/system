@@ -165,4 +165,127 @@ describe("iter", function() {
 
   });
 
+
+  it("iter#some should return true if one array item is true", function() {
+    
+    var f = iter.some(arr, function(v, k) {
+      return (v === 5);
+    });
+
+    expect(f).toEqual(true);
+
+  });
+
+  it("iter#some should return false if no array items are true", function() {
+    
+    var f = iter.some(arr, function(v, k) {
+      return (v === 50);
+    });
+
+    expect(f).toEqual(false);
+
+  });
+
+  it("iter#some should return true if one object value is true", function() {
+    
+    var f = iter.some(obj, function(v, k) {
+      return (v === "met a pieman");
+    });
+
+    expect(f).toEqual(true);
+
+  });
+
+  it("iter#some should return false if no no object values are true", function() {
+    
+    var f = iter.some(obj, function(v, k) {
+      return (v === "not found");
+    });
+
+    expect(f).toEqual(false);
+
+  });
+
+  it("iter#some should return true if one iterable value is true", function() {
+    
+    var f = iter.some(iterable, function(v, k) {
+      return (v === "v7");
+    });
+
+    expect(f).toEqual(true);
+
+  });
+
+  it("iter#some should return false if no iterable values are true", function() {
+    
+    var f = iter.some(iterable, function(v, k) {
+      return (v === "not found");
+    });
+
+    expect(f).toEqual(false);
+
+  });
+
+
+  it("iter#every should return true if every array item is true", function() {
+    
+    var f = iter.every(arr, function(v, k) {
+      return (v !== 50);
+    });
+
+    expect(f).toEqual(true);
+
+  });
+
+  it("iter#every should return false if one array item is false", function() {
+    
+    var f = iter.every(arr, function(v, k) {
+      return (v === 50);
+    });
+
+    expect(f).toEqual(false);
+
+  });
+
+  it("iter#every should return true if every object value is true", function() {
+    
+    var f = iter.every(obj, function(v, k) {
+      return (typeof v === "string");
+    });
+
+    expect(f).toEqual(true);
+
+  });
+
+  it("iter#every should return false if one object value is false", function() {
+    
+    var f = iter.every(obj, function(v, k) {
+      return (v === "not found");
+    });
+
+    expect(f).toEqual(false);
+
+  });
+
+  it("iter#every should return true if one iterable value is true", function() {
+    
+    var f = iter.every(iterable, function(v, k) {
+      return (typeof v === "string");
+    });
+
+    expect(f).toEqual(true);
+
+  });
+
+  it("iter#every should return false if no iterable values are true", function() {
+    
+    var f = iter.every(iterable, function(v, k) {
+      return (v === "not found");
+    });
+
+    expect(f).toEqual(false);
+
+  });
+
+
 });
