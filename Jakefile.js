@@ -28,7 +28,6 @@ namespace("build", function() {
     
       copyAndMinifyFile(__dirname + "/src/require.js");
       copyAndMinifyFile(__dirname + "/src/worker.js");
-      copyAndMinifyFile(__dirname + "/src/es5-shim.js");
       copyFile(__dirname + "/src/index.html");
       copyFile(__dirname + "/src/index.debug.html");
       buildFiles(__dirname + "/src/app/main.js");

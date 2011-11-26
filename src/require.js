@@ -107,7 +107,7 @@
   function iterator(object){
     
     var iterator = false, i, keys;
-    
+
     if (typeof object.next ==='function') {
       iterator = object;
     }
@@ -195,6 +195,7 @@
     }
   }
 
+
   function forEach(o, func) {
     if(typeof o.forEach === 'function') {
       o.forEach(func);
@@ -205,6 +206,7 @@
       });
     }
   }
+
   
   function filter(o, func, scope) {
     if(typeof o.filter === 'function') {
@@ -224,6 +226,8 @@
     return ret;
   }
   
+
+
   function map(o, func, scope) {
     if(typeof o.map === 'function') {
       return o.map(func, scope);
@@ -241,6 +245,8 @@
     return ret;
   }
 
+
+
   function some(o, func, scope) {
     if(typeof o.some === 'function') {
       return o.some(func, scope);
@@ -254,6 +260,8 @@
     return ret;
   }
   
+
+
   function every(o, func, scope) {
     if(typeof o.every === 'function') {
       return o.every(func, scope);
@@ -267,6 +275,8 @@
     return ret;
   }
   
+
+
   function indexOf(o, val) {
     if(typeof o.indexOf === 'function') {
       return o.indexOf(val);
@@ -281,6 +291,8 @@
     return ret;
   }
   
+
+
   function lastIndexOf(o, val){
     if(typeof o.lastIndexOf === 'function') {
       return o.lastIndexOf(val);
@@ -294,6 +306,8 @@
     return ret;
   }
 
+
+
   function toArray(o){
     var ret = [];
     exhaust(o, function(v, k){
@@ -301,6 +315,8 @@
     });
     return ret;
   }
+
+
 
   function reduce(ret, o, func){
 
@@ -330,17 +346,23 @@
     return ret;
   }
   
+
+
   function sum(o, ret) {
     return reduce(ret || 0, o, function(ret, a){
       return (ret + a);
     });
   }
   
+
+
   function pluck(o, key){
     return map(o, function(v){
       return v[key];
     });
   }
+
+
 
   function chain(args) {
 
@@ -365,6 +387,21 @@
           return iterables[0].next();
         }
       }
+    };
+  }
+
+  function imap(iterable, func){
+
+    iterable = iterator(iterable);
+
+    return {
+      
+      next: function () {
+
+        return func.apply(null, iterable.next());
+
+      }
+
     };
   }
 
@@ -1309,6 +1346,7 @@
     exports.sum         = sum;
     exports.pluck       = pluck;
     exports.chain       = chain;
+    exports.imap        = imap;
     exports.iterator    = iterator;
   });
   define("events", function(require, exports) {
@@ -1326,12 +1364,7 @@
     exports.del     = deleteData;
     exports.socket  = socket;
   });
-  define("func", function(require, exports) {
-    exports.bind    = bind;
-    exports.partial = partial;
-  });
   define("string", function(require, exports) {
-    //exports.trim        = trim;
     exports.camelCase   = camelCase;
     exports.hyphenate   = hyphenate;
     exports.capitalise  = capitalise;

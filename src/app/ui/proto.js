@@ -6,15 +6,16 @@
   @author:      Simon Jefford
   
 */
+"use strict";
 var object  = require("object"),
-    events  = require("events"),
+    events  = require("events").proto,
     iter    = require("iter"),
     some    = iter.some,
     forEach = iter.forEach,
     $       = require("/lib/dom").$;
 
 //  create our prototype ui entity based on the event object
-exports.proto = object.create(events.proto, {
+exports.proto = object.create(events, {
   
   //  properties
 
@@ -27,14 +28,14 @@ exports.proto = object.create(events.proto, {
   */
   init: function(data) {
 
+    events.init.call(this);
+
     this.uuid       = data.uuid;
     this.region     = data.region || "";
     this.publish    = data.publish || false;
     this.subscribe  = data.subscribe || false;
     this.entityType = data.type + "/" + data.object;
     this.children   = [];
-
-    this.callProto("init");
 
     return this;
 
@@ -85,6 +86,24 @@ exports.proto = object.create(events.proto, {
       throw new TypeError("UI object must implement ui/proto");
     }
     this.children.push(child);
+
+  },
+
+
+  /*
+    @description  registers a set of child ui objects with this object
+    @param        {object} children in iterable set of children
+  */
+  registerChildren: function(children) {
+    
+    var that = this;
+
+    forEach(children, function(child, i) {
+
+      that.registerChild(child);
+      child.registerParent(that);
+
+    });
 
   },
 
@@ -147,7 +166,7 @@ exports.proto = object.create(events.proto, {
     var initial = e.phase ? false : true;
 
     //  call any listeners on this scope - if the event is stopped return false
-    this.callProto("_fire", [e]);
+    events._fire.call(this, e);    
     if(e.propogationStopped) {
       return e;
     }

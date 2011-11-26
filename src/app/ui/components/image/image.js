@@ -1,16 +1,17 @@
 /*
-  @name:        /app/ui/components/image/proto
+  @name:        /app/ui/components/image/image
 
   @description: prototype for an image component
                 
   @author:      Simon Jefford
   
 */
+"use strict";
 var object      = require("object"),
-    components  = require("/app/ui/components/proto"),
+    component   = require("/app/ui/components/proto").proto,
     $           = require("/lib/dom").$;
 
-exports.proto = object.create(components.proto, {
+exports.proto = object.create(component, {
   
   //  properties
   html: '<img class="components image" data-region="default"></img>'

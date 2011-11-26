@@ -1,16 +1,17 @@
 /*
-  @name:        ui/layouts/split-vertical/proto
+  @name:        ui/layouts/split-vertical/split-vertical
 
   @description: prototype for a vetical splitter layout
                 
   @author:      Simon Jefford
   
 */
+"use strict";
 var object  = require("object"),
-    layouts = require("/app/ui/layouts/proto"),
+    layout  = require("/app/ui/layouts/proto").proto,
     $       = require("/lib/dom").$;
 
-exports.proto = object.create(layouts.proto, {
+exports.proto = object.create(layout, {
   
   //  properties
   html: '<div class="layouts split-vertical" data-region="default"></div>'

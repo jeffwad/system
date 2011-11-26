@@ -6,6 +6,7 @@
   @author:       Simon Jefford
   
 */
+"use strict";
 var main2 = require("/app/main2").main2;
 
 describe("main2", function() {

@@ -6,6 +6,7 @@
   @author:       Simon Jefford
   
 */
+"use strict";
 var object      = require("object"),
     ui          = require("/app/ui/proto"),
     components  = require("/app/ui/components/proto");

@@ -1,16 +1,17 @@
 /*
-  @name:        /app/ui/apps/header/proto
+  @name:        /app/ui/apps/header/header
 
   @description: prototype for a header app
                 
   @author:      Simon Jefford
   
 */
+"use strict";
 var object  = require("object"),
-    apps    = require("/app/ui/apps/proto"),
+    app     = require("/app/ui/apps/proto").proto,
     $       = require("/lib/dom").$;
 
-exports.proto = object.create(apps.proto, {
+exports.proto = object.create(app, {
   
   //  properties
   html: [
@@ -22,9 +23,11 @@ exports.proto = object.create(apps.proto, {
         ].join(""),
 
   //  public
-  init: function() {
-    this.callProto("init", arguments);
+  init: function(data) {
+
+    app.init.call(this, data);
     return this;
+
   }
 
 

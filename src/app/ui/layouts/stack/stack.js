@@ -1,19 +1,20 @@
 /*
-  @name:        ui/layouts/section/proto
+  @name:        ui/layouts/section/stack
 
   @description: prototype for a section layout
                 
   @author:      Simon Jefford
   
 */
+"use strict";
 var object  = require("object"),
-    layouts = require("/app/ui/layouts/proto"),
+    layout = require("/app/ui/layouts/proto").proto,
     iter    = require("iter"),
     forEach = iter.forEach,
     some    = iter.some,
     $       = require("/lib/dom").$;
 
-exports.proto = object.create(layouts.proto, {
+exports.proto = object.create(layout, {
   
   //  properties
   html: '<div class="layouts section" data-region="default"></div>',

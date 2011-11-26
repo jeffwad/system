@@ -6,12 +6,13 @@
   @author:      Simon Jefford
   
 */
+"use strict";
 var object  = require("object"),
-    ui      = require("/app/ui/proto"),
+    ui      = require("/app/ui/proto").proto,
     $       = require("/lib/dom").$;
 
 //  create our prototype ui entity based on the ui/proto object
-exports.proto = object.create(ui.proto, {
+exports.proto = object.create(ui, {
   
   //  properties
 

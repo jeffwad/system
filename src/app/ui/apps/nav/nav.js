@@ -1,16 +1,17 @@
 /*
-  @name:        /app/ui/apps/nav/proto
+  @name:        /app/ui/apps/nav/nav
 
   @description: prototype for a navigation app
                 
   @author:      Simon Jefford
   
 */
+"use strict";
 var object  = require("object"),
-    apps    = require("/app/ui/apps/proto"),
+    app     = require("/app/ui/apps/proto").proto,
     $       = require("/lib/dom").$;
 
-exports.proto = object.create(apps.proto, {
+exports.proto = object.create(app, {
   
   //  properties
   html: '<nav class="apps nav" data-region="default"></nav>'

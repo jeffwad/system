@@ -1,16 +1,17 @@
 /*
-  @name:        /app/ui/components/text/proto
+  @name:        /app/ui/components/text/text
 
   @description: prototype for a text component
                 
   @author:      Simon Jefford
   
 */
+"use strict";
 var object      = require("object"),
-    components  = require("/app/ui/components/proto"),
+    component   = require("/app/ui/components/proto").proto,
     $           = require("/lib/dom").$;
 
-exports.proto = object.create(components.proto, {
+exports.proto = object.create(component, {
   
   //  properties
   html: '<p class="components text" data-region="default"></p>'

@@ -1,16 +1,17 @@
 /*
-  @name:        /app/ui/apps/list/proto
+  @name:        /app/ui/apps/list/list
 
   @description: prototype for a list app
                 
   @author:      Simon Jefford
   
 */
+"use strict";
 var object  = require("object"),
-    apps    = require("/app/ui/apps/proto"),
+    app     = require("/app/ui/apps/proto").proto,
     $       = require("/lib/dom").$;
 
-exports.proto = object.create(apps.proto, {
+exports.proto = object.create(app, {
   
   //  properties
   html: '<ul class="apps list" data-region="default"></ul>'

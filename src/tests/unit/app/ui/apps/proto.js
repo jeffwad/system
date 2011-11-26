@@ -6,9 +6,10 @@
   @author:       Simon Jefford
   
 */
+"use strict";
 var object  = require("object"),
-    ui      = require("/app/ui/proto"),
-    apps    = require("/app/ui/apps/proto");
+    ui      = require("/app/ui/proto").proto,
+    app     = require("/app/ui/apps/proto").proto;
 
 describe("/ui/layouts/proto/", function() {
 
@@ -16,7 +17,7 @@ describe("/ui/layouts/proto/", function() {
 
   beforeEach(function() {
 
-    entity = object.create(apps.proto).init({
+    entity = object.create(app).init({
       uuid: "01234"
     });
 
@@ -31,7 +32,7 @@ describe("/ui/layouts/proto/", function() {
 
   it("ui/layouts/proto#init should return an object with ui/proto on it's prototype", function() {
     
-    expect(ui.proto.isPrototypeOf(entity)).toEqual(true);
+    expect(ui.isPrototypeOf(entity)).toEqual(true);
 
   });
 

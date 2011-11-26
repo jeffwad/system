@@ -6,20 +6,22 @@
   @author:       Simon Jefford
   
 */
+"use strict";
+
 var object  = require("object"),
-    sys     = require("sys"),
     layouts = {
-      "section"           : require("/app/ui/layouts/section/proto"),
-      "split-horizontal"  : require("/app/ui/layouts/split-horizontal/proto"),
-      "split-vertical"    : require("/app/ui/layouts/split-vertical/proto")
+      "split-horizontal"  : require("/app/ui/layouts/split-horizontal/split-horizontal"),
+      "split-vertical"    : require("/app/ui/layouts/split-vertical/split-vertical"),
+      "stack"             : require("/app/ui/layouts/stack/stack")
     };
+
 
 exports.create = function(data) {
 
   var layout = layouts[data.object].proto;
 
   if(typeof layout === "undefined") {
-    throw new TypeError("app/ui/layouts/factory cannot create object: " + data.object);
+    throw new TypeError(module.path + " cannot create object: " + data.object);
   }
   return object.create(layout).init(data);  
 

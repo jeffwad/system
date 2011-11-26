@@ -6,12 +6,12 @@
   @author:       Simon Jefford
   
 */
+"use strict";
 var object     = require("object"),
-    sys        = require("sys"),
     components = {
-      "image" : require("/app/ui/components/image/proto"),
-      "link"  : require("/app/ui/components/link/proto"),
-      "text"  : require("/app/ui/components/text/proto")
+      "image" : require("/app/ui/components/image/image"),
+      "link"  : require("/app/ui/components/link/link"),
+      "text"  : require("/app/ui/components/text/text")
     };
 
 exports.create = function(data) {
@@ -19,7 +19,7 @@ exports.create = function(data) {
   var component = components[data.object].proto;
 
   if(typeof component === "undefined") {
-    throw new TypeError("app/ui/components/factory cannot create object: " + data.object);
+    throw new TypeError(module.path + " cannot create object: " + data.object);
   }
   return object.create(component).init(data);  
 

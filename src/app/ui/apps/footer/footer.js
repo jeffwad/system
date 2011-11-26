@@ -1,16 +1,17 @@
 /*
-  @name:        /app/ui/apps/footer/proto
+  @name:        /app/ui/apps/footer/footer
 
   @description: prototype for a footer app
                 
   @author:      Simon Jefford
   
 */
+"use strict";
 var object  = require("object"),
-    apps    = require("/app/ui/apps/proto"),
+    app     = require("/app/ui/apps/proto").proto,
     $       = require("/lib/dom").$;
 
-exports.proto = object.create(apps.proto, {
+exports.proto = object.create(app, {
   
   //  properties
   html: '<ul class="apps footer" data-region="default"></ul>'

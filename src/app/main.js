@@ -6,6 +6,7 @@
   @author:       Simon Jefford
   
 */
+"use strict";
 var object        = require("object"),
     sys           = require("sys"),
     site          = require("/app/site"),
