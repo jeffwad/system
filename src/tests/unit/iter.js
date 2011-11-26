@@ -6,6 +6,8 @@
   @author:       Simon Jefford
   
 */
+"use strict";
+
 var iter = require("iter");
 
 describe("iter", function() {

@@ -14,6 +14,10 @@ var object  = require("object"),
 exports.proto = object.create(ui.proto, {
   
   //  properties
+  init: function() {
+    this.callProto("init", arguments);
+    return this;
+  }
 
 
   //  public

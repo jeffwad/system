@@ -1,17 +1,3 @@
-/*
-  @name:         modules
-
-  @description:  unit test files here
-
-  @author:       Simon Jefford
-  
-*/
-
-//  core modules provided by require
-require("/tests/unit/object");
-require("/tests/unit/events");
-require("/tests/unit/iter");
-require("/tests/unit/sys");
 
 //  utils
 require("/tests/unit/app/utils/recursor/proto");

@@ -49,19 +49,19 @@ exports.site = {
           {
             "uuid"    : "20BB4072-9AAE-486F-9DEC-872A5315767B",
             "type"    : "components",
-            "event"   : "section.home",
+            "publish" : "section.home",
             "object"  : "link"
           },
           {
             "uuid"    : "8EA22A22-37F4-4A78-8406-B9BB9F8BDE45",
             "type"    : "components",
-            "event"   : "section.about",
+            "publish" : "section.about",
             "object"  : "link"
           },
           {
             "uuid"    : "7CE36D86-63B6-46DD-A645-3EA16D90DB99",
             "type"    : "components",
-            "event"   : "section.contact",
+            "publish" : "section.contact",
             "object"  : "link"
           }
         ]
@@ -72,23 +72,23 @@ exports.site = {
         "object"  : "section",
         "children": [
           {
-            "uuid"    : "639D8FBC-BC49-4658-84C7-518BC00405E3",
-            "type"    : "apps",
-            "event"   : "section.home",
-            "object"  : "entry"
+            "uuid"      : "639D8FBC-BC49-4658-84C7-518BC00405E3",
+            "type"      : "apps",
+            "subscribe" : "section.home",
+            "object"    : "entry"
           },
           {
-            "uuid"    : "0BBBAF06-1A31-4074-B240-436AF5A04786",
-            "type"    : "apps",
-            "event"   : "section.contact",
-            "object"  : "entry"
+            "uuid"      : "0BBBAF06-1A31-4074-B240-436AF5A04786",
+            "type"      : "apps",
+            "subscribe" : "section.contact",
+            "object"    : "entry"
           },
           {
-            "uuid"    : "2BB59B38-ACF6-4FE1-9A32-234834B87BC7",
-            "type"    : "layouts",
-            "event"   : "section.about",
-            "object"  : "split-horizontal",
-            "children": [
+            "uuid"      : "2BB59B38-ACF6-4FE1-9A32-234834B87BC7",
+            "type"      : "layouts",
+            "subscribe" : "section.about",
+            "object"    : "split-horizontal",
+            "children"  : [
               {
                 "uuid"    : "29C1403F-9357-446B-AFCC-DE7A3FECC6E6",
                 "type"    : "apps",

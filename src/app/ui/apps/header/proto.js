@@ -19,9 +19,14 @@ exports.proto = object.create(apps.proto, {
           '<h1 data-region="header"></h1>',
           '<h2 data-region="description"></h2>',
           '</header>'
-        ].join("")
+        ].join(""),
 
   //  public
+  init: function() {
+    this.callProto("init", arguments);
+    return this;
+  }
+
 
   //  private
 

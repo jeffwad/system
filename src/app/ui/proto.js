@@ -27,12 +27,15 @@ exports.proto = object.create(events.proto, {
   */
   init: function(data) {
 
-    this.uuid = data.uuid;
-    this.region = data.region || "";
-    this.event = data.event || false;
+    this.uuid       = data.uuid;
+    this.region     = data.region || "";
+    this.publish    = data.publish || false;
+    this.subscribe  = data.subscribe || false;
     this.entityType = data.type + "/" + data.object;
+    this.children   = [];
+
     this.callProto("init");
-    this.children = [];
+
     return this;
 
   },

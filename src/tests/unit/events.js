@@ -6,6 +6,8 @@
   @author:       Simon Jefford
   
 */
+"use strict";
+
 var object = require("object"),
     events = require("events");
 

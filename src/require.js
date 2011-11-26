@@ -1,24 +1,25 @@
 /*
-*  @name:          require.js
-*
-*  @description:   module loader and system utils
-*  
-*                  prototypal inheritance
-*                  iter tools
-*                  promise
-*                  events
-*                  js module loader
-*                  web worker spawning
-*                  string and function enhancements
-*
-*  @author:        Simon Jefford
-*  
-*/
+  @name:          require.js
 
+  @description:   module loader and system utils
+  
+                  prototypal inheritance
+                  iter tools
+                  promise
+                  events
+                  js module loader
+                  web worker spawning
+                  string and function enhancements
+
+  @author:        Simon Jefford
+  
+*/
 (function(json) {
 
-  if(typeof StopIteration === 'undefined') {
-    StopIteration = new Error();
+  "use strict";
+
+  if(typeof self.StopIteration === 'undefined') {
+    self.StopIteration = new Error();
   }
   /*
 
@@ -44,31 +45,12 @@
   */
   function create(prototype, instance) {
 
-    var i, object, callProto = false;
-
-    if(typeof prototype.callProto !== "function") {
-      prototype = Object.create(prototype);
-      prototype.callProto = function(method, args) {
-        var m = this[method].callProto;
-        return m.apply(this, args);
-      };
-    }
+    var i, object;
 
     object = Object.create(prototype);
 
     if(typeof instance === "object") {
-
-      for(i in instance) {
-        if(typeof object[i] === "function") {
-          callProto = object[i];
-        }
-        object[i] = instance[i];
-        if(callProto) {
-          object[i].callProto = callProto;
-        }
-        callProto = false;
-        
-      }
+      mixin(object, instance);
     }
 
     return object;
@@ -324,7 +306,7 @@
 
     var iterable;
 
-    if(arguments.length < 3) {
+    if(typeof o === "function" && typeof func === "undefined") {
 
       iterable = iterator(ret);
       func = o;
@@ -360,13 +342,13 @@
     });
   }
 
-  function chain() {
+  function chain(args) {
 
-    if(arguments.length === 1) {
-      return iterator(arguments[0]);
+    if(args.length === 1) {
+      return iterator(args[0]);
     }
 
-    var iterables = map(arguments, iterator);
+    var iterables = map(args, iterator);
     return {
       next: function() {
         try {
@@ -440,12 +422,11 @@
 
   };
 
-  function when() {
+  function when(args) {
 
     var p, f, 
         i       = 0,
-        l       = arguments.length, 
-        args    = arguments,
+        l       = args.length, 
         results = [];
 
     p = create(promise).init();
@@ -766,7 +747,8 @@
       var socket,
           that = this;
 
-      this.callProto("init");
+      events.init.call(this);
+      //this.callProto("init");
 
       this.on("send.message", function(e) {
         socket.send(that._format("j", JSON.stringify(e.data)));
@@ -828,14 +810,21 @@
     },
 
     fire: function(type, data) {
-      this.callProto("fire", ["send.message", {
+      
+      events.fire.call(this, "send.message", {
         type: type,
         data: data
-      }]);
+      });
+      /*this.callProto("fire", ["send.message", {
+        type: type,
+        data: data
+      }]);*/
     },
 
     close: function() {
-      this.callProto("fire", ["close.socket"]);
+
+      events.fire.call(this, "close.socket");
+      //this.callProto("fire", ["close.socket"]);
     }
 
   });
@@ -924,34 +913,6 @@
   }();
 
   */
-
-  /*
-
-    Functions that call or bind existing functions
-  
-  */
-  function bind(){
-    var func = arguments[0], o = arguments[1], args = [], i, l;
-    for(i = 1, l = arguments.length; i < l; i++) {
-      args[i] = arguments[i];
-    }
-    return function(){
-      return func.apply(o, args);
-    };
-  }
-  
-  function partial(){
-    var func = arguments[0], args = Array.prototype.slice.call(arguments, 1);
-    return function(){
-      var i, l = args.length, j = 0, len = arguments.length;
-      for(i = 0; i < l && j < len; i++ ) {
-        if (typeof args[i] === 'undefined') {
-          args[i] = arguments[j++];
-        }
-      }
-      return func.apply(false, args);
-    };
-  }
 
 
   /*
@@ -1192,7 +1153,7 @@
         delete loading[moduleName];
         uninitialised[moduleName] = true;
 
-        if(arguments.length === 2) {
+        if(typeof def === "undefined") {
           def = dependencies;
           dependencies = [];
         }
@@ -1381,7 +1342,7 @@
     exports.load  = load;
   });
 
-})(function(string) {
+}(function(string) {
     try {  
       return eval("(" + string + ")");
     }
@@ -1390,6 +1351,6 @@
       return false;
     }
   }
-);
+));
 
 

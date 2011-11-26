@@ -6,6 +6,8 @@
   @author:       Simon Jefford
   
 */
+"use strict";
+
 var sys     = require("sys"),
     events  = require("events");
 

@@ -34,7 +34,7 @@ exports.proto = object.create(layouts.proto, {
 
     some(this.children, function(child) {
       selected = child;
-      return child.event === e.data.event;
+      return child.subscribe === e.data.publish;
     });
     
     return selected;
