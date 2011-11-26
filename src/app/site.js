@@ -6,6 +6,54 @@
   @author:      Simon Jefford
   
 */
+
+
+/*
+  @name:        site
+
+  @description: site model
+                
+  @author:      Simon Jefford
+  
+*/
+var factories = {
+      layouts     : require("/app/ui/layouts/factory"),
+      apps        : require("/app/ui/apps/factory"),
+      components  : require("/app/ui/components/factory")
+    },
+    imap  = require("iter").imap;
+
+
+function create(data) {
+    
+  var fac = factories[data.type];
+  
+  if(typeof fac === "undefined") {
+    throw new TypeError("app/ui/factory cannot load factory of type: " + data.type);
+  }
+
+  return fac.create(data);
+
+}
+
+
+function build(data, i) {
+
+  var entity = create(data);
+  entity.registerChildren(imap(data.children, build));
+  return [entity, i];
+
+
+}
+
+
+
+exports.build = function() {
+    
+  return build(this.site.root, 0)[0];
+
+};
+
 exports.site = {
 	"uuid": "2BB06A26-2074-467B-A446-AB822F506162",
   "client": {
