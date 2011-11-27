@@ -16,7 +16,7 @@ exports.proto = object.create(app, {
   //  properties
   html: '<div class="apps record" data-region="default"></div>',
 
-  _dataEvent: "data-record"
+  dataEvent: "data-record"
 
   //  public
 

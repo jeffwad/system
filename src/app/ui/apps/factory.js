@@ -18,6 +18,11 @@ var object  = require("object"),
 
     };
 
+
+/*
+  @description  creates an app 
+  @param        {object} data
+*/
 exports.create = function(data) {
   
   var app = apps[data.object].proto;

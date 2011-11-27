@@ -11,6 +11,11 @@ var imap      = require("iter").imap,
     factories = require("/app/ui/factories");
 
 
+/*
+  @description  creates a ui entity
+  @param        {object} data
+  @return       ui entity
+*/
 function create(data) {
     
   var fac = factories[data.type];
@@ -24,6 +29,11 @@ function create(data) {
 }
 
 
+/*
+  @description  recurses through the site tree and builds a set of ui entities
+  @param        {object} data
+  @return       ui entity
+*/
 function build(data, i) {
 
   var entity = create(data);
@@ -86,21 +96,21 @@ exports.site = {
           {
             "uuid"    : "20BB4072-9AAE-486F-9DEC-872A5315767B",
             "type"    : "components",
-            "publish" : "section.home",
+            "publish" : "page.home",
             "object"  : "link",
             "children": []
           },
           {
             "uuid"    : "8EA22A22-37F4-4A78-8406-B9BB9F8BDE45",
             "type"    : "components",
-            "publish" : "section.about",
+            "publish" : "page.about",
             "object"  : "link",
             "children": []
           },
           {
             "uuid"    : "7CE36D86-63B6-46DD-A645-3EA16D90DB99",
             "type"    : "components",
-            "publish" : "section.contact",
+            "publish" : "page.contact",
             "object"  : "link",
             "children": []
           }
@@ -114,15 +124,37 @@ exports.site = {
           {
             "uuid"      : "639D8FBC-BC49-4658-84C7-518BC00405E3",
             "type"      : "apps",
-            "subscribe" : "section.home",
+            "subscribe" : "page.home",
             "object"    : "record",
             "records"   : ["01234567890"],
-            "children"  : []
+            "children"  : [
+              {
+                "uuid"    : "BA68E0B0-BE11-4E22-B3ED-014DB1B17057",
+                "type"    : "components",
+                "object"  : "text",
+                "binding" : "name",
+                "children": []
+              },
+              {
+                "uuid"    : "BA68E0B0-BE11-4E22-B3ED-014DB1B17057",
+                "type"    : "components",
+                "object"  : "text",
+                "binding" : "title",
+                "children": []
+              },
+              {
+                "uuid"    : "BA68E0B0-BE11-4E22-B3ED-014DB1B17057",
+                "type"    : "components",
+                "object"  : "text",
+                "binding" : "description",
+                "children": []
+              }
+            ]
           },
           {
             "uuid"      : "0BBBAF06-1A31-4074-B240-436AF5A04786",
             "type"      : "apps",
-            "subscribe" : "section.contact",
+            "subscribe" : "page.contact",
             "object"    : "record",
             "records"   : ["09876543210"],
             "children"  : []
@@ -130,7 +162,7 @@ exports.site = {
           {
             "uuid"      : "2BB59B38-ACF6-4FE1-9A32-234834B87BC7",
             "type"      : "layouts",
-            "subscribe" : "section.about",
+            "subscribe" : "page.about",
             "object"    : "split-horizontal",
             "children"  : [
               {

@@ -14,7 +14,9 @@ var object  = require("object"),
 exports.proto = object.create(app, {
   
   //  properties
-  html: '<ul class="apps list" data-region="default"></ul>'
+  html: '<ul class="apps list" data-region="default"></ul>',
+
+  dataEvent: "data-list"
 
   //  public
 

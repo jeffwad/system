@@ -235,9 +235,9 @@ describe("/ui/proto", function() {
     entity.registerChild(object.create(ui.proto).init("child2"));
     entity.registerChild(object.create(ui.proto).init("child3"));
     
-    spy1 = sinon.spy(entity.children[0], "capture");
-    spy2 = sinon.spy(entity.children[1], "capture");
-    spy3 = sinon.spy(entity.children[2], "capture");
+    spy1 = sinon.spy(entity.children[0], "_capture");
+    spy2 = sinon.spy(entity.children[1], "_capture");
+    spy3 = sinon.spy(entity.children[2], "_capture");
 
     entity.fire("test.event.1");
     expect(spy1.calledOnce).toEqual(true);
@@ -256,7 +256,7 @@ describe("/ui/proto", function() {
 
     entity.registerParent(object.create(ui.proto).init("parent"));
     
-    spy = sinon.spy(entity.parent, "bubble");
+    spy = sinon.spy(entity.parent, "_bubble");
 
     entity.fire("test.event.1");
     expect(spy.calledOnce).toEqual(true);
@@ -270,7 +270,7 @@ describe("/ui/proto", function() {
     var spy = sinon.spy();
 
     entity.on("test.event.1", spy);
-    entity.bubble(object.create(events.event).init("test.event.1"));
+    entity.bubble("test.event.1");
     expect(spy.calledOnce).toEqual(true);
     expect(spy.args[0][0].type).toEqual("test.event.1");
     expect(spy.args[0][0].phase).toEqual("bubble");
@@ -282,7 +282,7 @@ describe("/ui/proto", function() {
     var spy = sinon.spy();
 
     entity.on("test.event.1", spy);
-    entity.capture(object.create(events.event).init("test.event.1"));
+    entity.capture("test.event.1");
     expect(spy.calledOnce).toEqual(true);
     expect(spy.args[0][0].type).toEqual("test.event.1");
     expect(spy.args[0][0].phase).toEqual("capture");

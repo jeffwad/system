@@ -58,7 +58,7 @@ exports.proto = object.create(layout, {
   },
 
  
-  //  auto bind event handlers
+  //  auto bound event handlers
 
   /*
     @description  responds to a state change event and displays the associated child

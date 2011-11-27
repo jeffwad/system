@@ -9,6 +9,7 @@
 "use strict";
 var object  = require("object"),
     events  = require("events").proto,
+    event   = require("events").event,
     iter    = require("iter"),
     some    = iter.some,
     forEach = iter.forEach,
@@ -24,7 +25,7 @@ exports.proto = object.create(events, {
 
   /*
     @description  initialises the object
-    @param        {string} uuid
+    @param        {object} data
   */
   init: function(data) {
 
@@ -46,8 +47,9 @@ exports.proto = object.create(events, {
     @description  fires an event in this scope with phase = "bubble"
     @param        {object} e event object
   */
-  bubble: function(e) {
+  bubble: function(type, data) {
     
+    var e = object.create(event).init(type, data);
     e.phase = "bubble";
     this._fire(e);
 
@@ -58,8 +60,9 @@ exports.proto = object.create(events, {
     @description  fires an event in this scope with phase = "capture"
     @param        {object} e event object
   */
-  capture: function(e) {
+  capture: function(type, data) {
     
+    var e = object.create(event).init(type, data);
     e.phase = "capture";
     this._fire(e);
 
@@ -156,6 +159,29 @@ exports.proto = object.create(events, {
 
   //  private
 
+  /*
+    @description  propogates an event in this scope with phase = "bubble"
+    @param        {object} e event object
+  */
+  _bubble: function(e) {
+    
+    e.phase = "bubble";
+    this._fire(e);
+
+  },
+
+
+  /*
+    @description  propogates an event in this scope with phase = "capture"
+    @param        {object} e event object
+  */
+  _capture: function(e) {
+    
+    e.phase = "capture";
+    this._fire(e);
+
+  },
+
 
   /*
     @description  fires an event up and down it's child and parent objects
@@ -174,14 +200,14 @@ exports.proto = object.create(events, {
     //  broadcast to our children
     if(initial || e.phase === "capture") {
       some(this.children, function(child) {
-        child.capture(e);
+        child._capture(e);
         return e.propogationStopped;
       }); 
     }
 
-    //  if the event is not stopped then broadcast to the parent
+    //  if the event is not stopped then broadcast to the parent if there is one
     if(!e.propogationStopped && ((initial || e.phase === "bubble") && this.parent)) {
-      this.parent.bubble(e);
+      this.parent._bubble(e);
     }
     
     return e;

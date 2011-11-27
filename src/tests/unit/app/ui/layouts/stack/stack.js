@@ -121,7 +121,7 @@ describe("/ui/layouts/stack/proto", function() {
   });
 
 
-  it("ui/layouts/stack/proto#__/state/control/change__ should set the currentChild to the first", function() {
+  it("ui/layouts/stack/proto#/state/control/change should set the currentChild to the first", function() {
 
     stack.fire("/state/control/change", {
       publish: "stack-one"
@@ -131,7 +131,7 @@ describe("/ui/layouts/stack/proto", function() {
   });
 
 
-  it("ui/layouts/stack/proto#__/state/control/change__ should set the currentChild to the second", function() {
+  it("ui/layouts/stack/proto#/state/control/change should set the currentChild to the second", function() {
     
     stack.fire("/state/control/change", {
       publish: "stack-two"
@@ -141,7 +141,7 @@ describe("/ui/layouts/stack/proto", function() {
   });
 
 
-  it("ui/layouts/stack/proto#__/state/control/change__ should set the currentChild to the third", function() {
+  it("ui/layouts/stack/proto#/state/control/change should set the currentChild to the third", function() {
     
     stack.fire("/state/control/change", {
       publish: "stack-three"

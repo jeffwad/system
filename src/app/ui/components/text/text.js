@@ -14,9 +14,15 @@ var object      = require("object"),
 exports.proto = object.create(component, {
   
   //  properties
-  html: '<p class="components text" data-region="default"></p>'
+  html: '<p class="components text" data-region="default"></p>',
 
   //  public
+  update: function(value) {
+    
+    this.rootNode.innerHTML = value;
+      
+  }
+
 
   //  private
 

@@ -14,7 +14,10 @@ var object  = require("object"),
 exports.proto = object.create(app, {
   
   //  properties
-  html: '<nav class="apps nav" data-region="default"></nav>'
+  html: '<nav class="apps nav" data-region="default"></nav>',
+
+  dataEvent: "data-site"
+
 
   //  public
 
