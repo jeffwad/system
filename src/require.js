@@ -687,9 +687,8 @@
 
       this._handlers = {};
       for(i in this) (function(member, name) {
-        if(typeof member === "function" && /^__(.+)__$/.test(name)) {
-          var event = RegExp.$1;
-          that._handlers[event] = that.on(event, function(e) {
+        if(typeof member === "function" && /^\//.test(name)) {
+          that._handlers[name] = that.on(name, function(e) {
             that[name](e);
           });
         }

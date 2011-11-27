@@ -7,8 +7,9 @@
   
 */
 "use strict";
+
 var object  = require("object"),
-    layout = require("/app/ui/layouts/proto").proto,
+    layout  = require("/app/ui/layouts/proto").proto,
     iter    = require("iter"),
     forEach = iter.forEach,
     some    = iter.some,
@@ -20,7 +21,6 @@ exports.proto = object.create(layout, {
   html: '<div class="layouts section" data-region="default"></div>',
 
   //  public
-
  
   //  private
 
@@ -64,7 +64,7 @@ exports.proto = object.create(layout, {
     @description  responds to a state change event and displays the associated child
     @param        {object} e
   */
-  "__state.control.change__": function(e) {
+  "/state/control/change": function(e) {
 
     var selectedChild = this._getSelectedChild(e);
 

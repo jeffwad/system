@@ -115,15 +115,17 @@ exports.site = {
             "uuid"      : "639D8FBC-BC49-4658-84C7-518BC00405E3",
             "type"      : "apps",
             "subscribe" : "section.home",
-            "object"    : "entry",
-            "children": []
+            "object"    : "record",
+            "records"   : ["01234567890"],
+            "children"  : []
           },
           {
             "uuid"      : "0BBBAF06-1A31-4074-B240-436AF5A04786",
             "type"      : "apps",
             "subscribe" : "section.contact",
-            "object"    : "entry",
-            "children": []
+            "object"    : "record",
+            "records"   : ["09876543210"],
+            "children"  : []
           },
           {
             "uuid"      : "2BB59B38-ACF6-4FE1-9A32-234834B87BC7",
@@ -141,7 +143,7 @@ exports.site = {
               {
                 "uuid"    : "542CE94A-7F06-4AEF-9DFE-379B50E2F1FA",
                 "type"    : "apps",
-                "object"  : "entry",
+                "object"  : "record",
                 "children": []
               }
             ]
@@ -149,8 +151,8 @@ exports.site = {
         ]
       },
       {
-        "uuid": "1B83C58F-A9EC-455D-9248-FF27CF3567F5",
-        "type": "apps",
+        "uuid"    : "1B83C58F-A9EC-455D-9248-FF27CF3567F5",
+        "type"    : "apps",
         "object"  : "footer",
         "children": []
       }

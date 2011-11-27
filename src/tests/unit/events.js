@@ -293,21 +293,21 @@ describe("events", function() {
 
     ev = object.create(events.proto, {
       
-      "__test.auto.1__": function(e) {
+      "/test/auto/1": function(e) {
         
       },
 
-      "__test.auto.2__": function(e) {
+      "/test/auto/2": function(e) {
         
       }
 
     }).init();
 
-    spy1 = sinon.spy(ev, "__test.auto.1__");
-    spy2 = sinon.spy(ev, "__test.auto.2__");
+    spy1 = sinon.spy(ev, "/test/auto/1");
+    spy2 = sinon.spy(ev, "/test/auto/2");
 
-    ev.fire("test.auto.1");
-    ev.fire("test.auto.2");
+    ev.fire("/test/auto/1");
+    ev.fire("/test/auto/2");
 
     expect(spy1.calledOnce).toEqual(true);
     expect(spy2.calledOnce).toEqual(true);
