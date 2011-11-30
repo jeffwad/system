@@ -72,16 +72,21 @@ exports.proto = object.create(ui, {
   _bindDataListener: function(uuid) {
 
     var that = this, 
-        event = "/bind/" + that.dataEvent + "/" + uuid;
+        event = "/bind/" + that.dataEvent;
 
-    sys.once(event, function(e) {
+    sys.on(event, function(e) {
 
-      that.update(e);
+      if(e.data.uuid === uuid) {
+
+        that.update(e);
+      }
 
     });
     
     sys.once("/system/ui/initialised", function() {
-      sys.fire(event + "/requested");
+      sys.fire(event + "/requested", {
+        uuid: uuid
+      });
     });
       
   },
