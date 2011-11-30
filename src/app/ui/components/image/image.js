@@ -14,9 +14,14 @@ var object      = require("object"),
 exports.proto = object.create(component, {
   
   //  properties
-  html: '<img class="components image" data-region="default"></img>'
+  html: '<img class="components image" data-region="default"></img>',
 
   //  public
+  update: function(src) {
+    
+    this.rootNode.setAttribute("src", src);
+      
+  }
 
   //  private
 

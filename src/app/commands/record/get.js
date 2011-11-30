@@ -10,6 +10,7 @@
 
 var object  = require("object"),
     sys     = require("sys"),
+    record  = require("/app/models/record"),
     command = require("/app/commands/proto").proto;
 
 
@@ -19,23 +20,32 @@ exports.proto = object.create(command, {
 
     try {
       
-      var p, model;
+      var that = this, response;
 
-      model = sys.loadModel(data.model);
+      response = record.get(data.uuid);
 
-      return model.get(data.uuid).then(function(instance) {
-        
+      if(!response) {
+
         return {
-          
-          status: this.CMD_OK,
-          data: {
-            instance: instance
-          }
-        
+          status: this.CMD_CANCELLED,
+          data: {}
         };
 
-      });
-            
+      }
+      else {
+
+        return response.then(function(instance) {
+          
+          return {
+            status: that.CMD_OK,
+            data: {
+              uuid     : data.uuid,
+              instance : instance
+            }
+          };
+        });
+      }
+
     }
     catch(e) {
 

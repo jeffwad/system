@@ -18,7 +18,7 @@ exports.proto = object.create(component, {
 
   //  public
   update: function(data) {
-    
+
     this.rootNode.innerHTML = data;
     this.rootNode.setAttribute("data-event", this.publish);
     this.rootNode.setAttribute("href", this.publish);

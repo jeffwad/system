@@ -7,8 +7,9 @@
  */
 "use strict";
 
-var object              = require("object"),
-    sequence            = require("/app/sequences/proto").proto,
+var object    = require("object"),
+    sys       = require("sys"),
+    sequence  = require("/app/sequences/proto").proto,
     seq;
     
 require("/app/commands/state/changeRequest");
@@ -23,4 +24,8 @@ seq = object.create(sequence).init(
   ]
 );
 
-seq.on("/state/change/requested");
+sys.on("/state/change/requested", function(e) {
+  
+  seq.process(e);
+
+});

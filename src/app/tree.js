@@ -19,15 +19,17 @@ exports.tree = {
     "object"  : "split-vertical",
     "children": [
       {
-        "uuid"    : "1D25B120-787F-4614-AAEF-417888EEE3DC",
-        "type"    : "apps",
-        "object"  : "header",
+        "uuid"        : "1D25B120-787F-4614-AAEF-417888EEE3DC",
+        "type"        : "apps",
+        "object"      : "header",
+        "bindDataUuid": "A4F8EF8B-1C1A-4624-B175-F20452C9EF48", 
         "children": [
           {
             "uuid"    : "A7E460C3-8EF7-4857-9662-7DFDFBB103C1",
             "type"    : "components",
             "region"  : "logo",
             "object"  : "image",
+            "binding" : "logo",
             "children": []
           },
           {
@@ -35,6 +37,7 @@ exports.tree = {
             "type"    : "components",
             "region"  : "header",
             "object"  : "text",
+            "binding" : "h1",
             "children": []
           },
           {
@@ -42,6 +45,7 @@ exports.tree = {
             "type"    : "components",
             "region"  : "description",
             "object"  : "text",
+            "binding" : "h2",
             "children": []
           }
         ]
@@ -88,27 +92,20 @@ exports.tree = {
             "type"          : "apps",
             "subscribe"     : "page.home",
             "object"        : "record",
-            "stateDataUuids": ["01234567890"],
+            "bindDataUuid"  : "5A9580FC-234A-4C65-A066-5129E3827759",
             "children"      : [
               {
                 "uuid"    : "BA68E0B0-BE11-4E22-B3ED-014DB1B17057",
                 "type"    : "components",
                 "object"  : "text",
-                "binding" : "name",
+                "binding" : "h1",
                 "children": []
               },
               {
                 "uuid"    : "BA68E0B0-BE11-4E22-B3ED-014DB1B17057",
                 "type"    : "components",
                 "object"  : "text",
-                "binding" : "title",
-                "children": []
-              },
-              {
-                "uuid"    : "BA68E0B0-BE11-4E22-B3ED-014DB1B17057",
-                "type"    : "components",
-                "object"  : "text",
-                "binding" : "description",
+                "binding" : "h2",
                 "children": []
               }
             ]
@@ -139,8 +136,23 @@ exports.tree = {
             "type"          : "apps",
             "subscribe"     : "page.contact",
             "object"        : "record",
-            "stateDataUuids": ["09876543210"],
-            "children"      : []
+            "bindDataUuid"  : "507432B8-B100-4B71-92F4-5D77126F6FBB",
+            "children"      : [
+              {
+                "uuid"    : "BA68E0B0-BE11-4E22-B3ED-014DB1B17057",
+                "type"    : "components",
+                "object"  : "text",
+                "binding" : "address",
+                "children": []
+              },
+              {
+                "uuid"    : "BA68E0B0-BE11-4E22-B3ED-014DB1B17057",
+                "type"    : "components",
+                "object"  : "text",
+                "binding" : "map",
+                "children": []
+              }
+            ]
           }
         ]
       },

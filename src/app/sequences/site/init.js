@@ -8,6 +8,7 @@
 "use strict";
 
 var object    = require("object"),
+    sys       = require("sys"),
     sequence  = require("/app/sequences/proto").proto,
     seq;
     
@@ -33,4 +34,8 @@ seq = object.create(sequence).init(
 
 );
 
-seq.once("/system/app/loaded");
+sys.once("/system/app/loaded", function(e) {
+  
+  seq.process(e);
+
+});

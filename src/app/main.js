@@ -14,8 +14,8 @@ var sys = require("sys");
 require("/app/sequences/site/init");
 require("/app/sequences/state/process");
 
-//  models
-require("/app/sequences/models/site");
+//  data
+require("/app/sequences/bind/record");
 
 
 sys.fire("/system/app/loaded");

@@ -32,7 +32,6 @@ exports.proto = object.create(command, {
 
       });
 
-
       // test state object
       states[0] = {
         
@@ -57,22 +56,6 @@ exports.proto = object.create(command, {
         }
 
       };
-
-      states[2] = {
-        
-        model: {
-          
-          home    : function(){return {value: function() {return "I broke that";}};},
-          about   : function(){return {value: function() {return "About";}};},
-          contact : function(){return {value: function() {return "Contact";}};}
-
-        }
-
-      };
-
-      //ui.fire("/bind/data-record/0E064234-C42A-4F4F-94EB-2E3FA00F4CF4", {
-      //  state: states[2]
-      //});
 
       sys.on("test1", function() {
         ui.fire("/state/data-record/01234567890/updated", {

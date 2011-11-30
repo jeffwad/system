@@ -34,21 +34,3 @@ exports.proto = {
 
   
 };
-
-
-
-forEach(["on", "once"], function(method) {
-  
-  exports.proto[method] = function(event) {
-    
-    var that = this;
-
-    return sys[method](event, function(data) {
-      
-      that.execute(data);
-
-    });
-
-  };
-
-});

@@ -53,7 +53,6 @@ exports.proto = object.create(ui, {
   */
   update: function(e) {
 
-    e.stopPropogation();
     this._update(e);
     this._updateChildren(e);
 
@@ -72,21 +71,23 @@ exports.proto = object.create(ui, {
   _bindDataListener: function(uuid) {
 
     var that = this, 
-        event = "/bind/" + that.dataEvent;
+        event = "/bind/" + this.dataEvent;
 
     sys.on(event, function(e) {
 
       if(e.data.uuid === uuid) {
 
+        //  force this into the same format as a state object
+        e.data.state = {
+          model: e.data.instance
+        };
         that.update(e);
       }
 
     });
     
-    sys.once("/system/ui/initialised", function() {
-      sys.fire(event + "/requested", {
-        uuid: uuid
-      });
+    sys.fire(event + "/requested", {
+      uuid: uuid
     });
       
   },
@@ -111,9 +112,7 @@ exports.proto = object.create(ui, {
 
       });
 
-      sys.once("/system/ui/initialised", function() {
-        sys.fire(event + "/requested");
-      });
+      sys.fire(event + "/requested");
 
     });
 

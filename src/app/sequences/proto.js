@@ -77,25 +77,12 @@ exports.proto = {
     this.sequence = sequence;
     return this;
 
+  },
+
+  process: function(e) {
+    
+    process(this.sequence, e.data);
+    
   }
 
 };
-
-
-forEach(["on", "once"], function(method) {
-  
-  exports.proto[method] = function(event) {
-    
-    var seq = this.sequence || {};
-
-    return sys[method](event, function(e) {
-      
-      process(seq, e.data);
-
-    });
-
-  };
-
-});
-
-
