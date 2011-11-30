@@ -14,10 +14,16 @@ var object      = require("object"),
 exports.proto = object.create(component, {
   
   //  properties
-  html: '<a class="components link" data-region="default"></a>'
+  html: '<a class="components link" data-region="default"></a>',
 
   //  public
+  update: function(data) {
+    
+    this.rootNode.innerHTML = data;
+    this.rootNode.setAttribute("data-event", this.publish);
+    this.rootNode.setAttribute("href", this.publish);
 
+  }
   //  private
 
 });

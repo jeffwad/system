@@ -23,20 +23,10 @@ exports.proto = object.create(app, {
         ].join(""),
 
 
-  dataEvent: "data-site"//,
+  dataEvent: "data-record"
 
   //  public
 
-  /*
-    @description  set up initial params
-    @param        {object} data
-  */
-  /*init: function(data) {
-
-    app.init.call(this, data);
-    return this;
-
-  }*/
 
 
   //  private

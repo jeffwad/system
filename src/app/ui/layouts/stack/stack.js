@@ -64,7 +64,7 @@ exports.proto = object.create(layout, {
     @description  responds to a state change event and displays the associated child
     @param        {object} e
   */
-  "/state/control/change": function(e) {
+  "/state/updated": function(e) {
 
     var selectedChild = this._getSelectedChild(e);
 

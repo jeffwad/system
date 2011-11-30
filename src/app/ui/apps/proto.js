@@ -9,6 +9,7 @@
 "use strict";
 
 var object  = require("object"),
+    sys     = require("sys"),
     forEach = require("iter").forEach,
     ui      = require("/app/ui/proto").proto,
     $       = require("/lib/dom").$;
@@ -17,8 +18,8 @@ var object  = require("object"),
 exports.proto = object.create(ui, {
   
   //  properties
-  publish: {
-    update: "/app/state/updated"
+  events: {
+    update: "/state/app/updated"
   },
 
   //  public
@@ -31,9 +32,13 @@ exports.proto = object.create(ui, {
     
     ui.init.call(this, data);
 
-    this.records = data.records || false;
+    if(data.bindDataUuid) {
+      this._bindDataListener(data.bindDataUuid);
+    }
 
-    this._bindDataListeners();
+    if(data.stateDataUuids) {
+      this._bindStateListeners(data.stateDataUuids);
+    }
 
     return this;
   
@@ -48,40 +53,63 @@ exports.proto = object.create(ui, {
   */
   update: function(e) {
 
-    console.log(this.uuid);
-
     e.stopPropogation();
-        
     this._update(e);
     this._updateChildren(e);
 
   },
 
 
-
+ 
   //  private
 
+
   /*
-    @description  binds data listeners to this app based up it's records
-                  and dataEvents attributes
+    @description  bind data listener to this app based up it's record
+                  and dataEvent attributes
     @param        {object} e
   */
-  _bindDataListeners: function() {
+  _bindDataListener: function(uuid) {
+
+    var that = this, 
+        event = "/bind/" + that.dataEvent + "/" + uuid;
+
+    sys.once(event, function(e) {
+
+      that.update(e);
+
+    });
+    
+    sys.once("/system/ui/initialised", function() {
+      sys.fire(event + "/requested");
+    });
+      
+  },
+
+
+  /*
+    @description  binds state listeners to this app based up it's records
+                  and dataEvent attributes
+    @param        {object} e
+  */
+  _bindStateListeners: function(uuids) {
 
     var that = this;
-
-    if(!this.records) {
-      return;
-    }
     
-    forEach(this.records, function(record) {
+    forEach(uuids, function(uuid) {
 
-      that.on("/state/" + that.dataEvent + "/" + record + "/updated", function(e) {
+      var event = "/state/" + that.dataEvent + "/" + uuid;
+
+      that.on(event + "/updated", function(e) {
 
         that.update(e);
 
       });
-      
+
+      sys.once("/system/ui/initialised", function() {
+        sys.fire(event + "/requested");
+      });
+
     });
 
   },
@@ -97,6 +125,7 @@ exports.proto = object.create(ui, {
   _update: function(e) {},
 
 
+
   /*
     @description  tells the apps child objects to update
     @param        {object} e
@@ -106,7 +135,7 @@ exports.proto = object.create(ui, {
     var that = this;
     forEach(this.children, function(child) {
 
-      child.capture(that.publish.update, e.data);
+      child.capture(that.events.update, e.data);
 
     });
 

@@ -7,33 +7,15 @@
   
 */
 "use strict";
-var object        = require("object"),
-    sys           = require("sys"),
-    site          = require("/app/site"),
-    ui, state;
 
-//  build the ui from the site tree
-ui = site.build();
+var sys = require("sys");
 
-//  render the ui
-ui.render(document.body);
+//  sequences
+require("/app/sequences/site/init");
+require("/app/sequences/state/process");
+
+//  models
+require("/app/sequences/models/site");
 
 
-// test state object
-state = {
-  
-  model: {
-    
-    name: function(){return {value: function() {return "Simon Jefford";}};},
-    description: function(){return {value: function() {return "Bit of a plonker";}};},
-    title: function(){return {value: function() {return "Mr";}};}
-
-  }
-
-};
-
-sys.on("test", function() {
-  ui.fire("/state/data-record/01234567890/updated", {
-    state: state
-  });
-});
+sys.fire("/system/app/loaded");

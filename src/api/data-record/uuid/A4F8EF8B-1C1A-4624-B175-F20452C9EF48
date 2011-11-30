@@ -1,0 +1,31 @@
+{"data": [
+  {
+    "uuid"          : "A4F8EF8B-1C1A-4624-B175-F20452C9EF48", // site instance uuid
+    "template-uuid" : "0E064234-C42A-4F4F-94EB-2E3FA00F4CF4", // site template uuid
+    "title"         : "Site data",
+    "created-on"    : "",
+    "related"       : {
+      "home"    : "ADE765BB-FF8A-40F8-AEC0-81D840321335",
+      "about"   : "666E5416-AAEC-4F6E-804A-207BD8FB1907",
+      "contact" : "B58B453B-1064-4B49-B984-2604C087DEAF"
+    }
+  },
+  {
+    "uuid"          : "ADE765BB-FF8A-40F8-AEC0-81D840321335", // component instance uuid
+    "template-uuid" : "854325E6-D03D-4D92-9A96-516697B4ECE7", // component template uuid
+    "created-on"    : "",
+    "value"         : "I broke that"
+  },
+  {
+    "uuid"          : "666E5416-AAEC-4F6E-804A-207BD8FB1907", // component instance uuid
+    "template-uuid" : "854325E6-D03D-4D92-9A96-516697B4ECE7", // component template uuid
+    "created-on"    : "",
+    "value"         : "About"
+  },
+  {
+    "uuid"          : "B58B453B-1064-4B49-B984-2604C087DEAF", // component instance uuid
+    "template-uuid" : "854325E6-D03D-4D92-9A96-516697B4ECE7", // component template uuid
+    "created-on"    : "",
+    "value"         : "Contact"
+  }]
+}

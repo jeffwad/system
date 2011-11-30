@@ -7,6 +7,7 @@
   
 */
 "use strict";
+
 var object  = require("object"),
     events  = require("events").proto,
     event   = require("events").event,
@@ -41,6 +42,25 @@ exports.proto = object.create(events, {
     return this;
 
   },
+
+
+
+  /*
+    @description  sets the event listeners up on the entity
+                  tells out children to do the same
+  */
+  addEventListeners: function() {
+
+    this._addEventListeners();
+
+    forEach(this.children, function(child) {
+      
+      child.addEventListeners();
+
+    });
+
+  },
+
 
 
   /*
@@ -158,6 +178,14 @@ exports.proto = object.create(events, {
 
 
   //  private
+
+
+
+  /*
+    @description  sets up our event listeners
+  */
+  _addEventListeners: function() {},
+
 
   /*
     @description  propogates an event in this scope with phase = "bubble"

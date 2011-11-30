@@ -8,6 +8,7 @@
 */
 "use strict";
 var object  = require("object"),
+    sys     = require("sys"),
     app     = require("/app/ui/apps/proto").proto,
     $       = require("/lib/dom").$;
 
@@ -16,11 +17,30 @@ exports.proto = object.create(app, {
   //  properties
   html: '<nav class="apps nav" data-region="default"></nav>',
 
-  dataEvent: "data-site"
-
+  dataEvent: "data-record",
 
   //  public
 
   //  private
+
+
+  /*
+    @description  sets up our event listeners
+  */
+  _addEventListeners: function() {
+
+    $(this.rootNode).on("click", "a", function(e) {
+      
+      e.preventDefault();
+
+      sys.fire("/state/change/requested", {
+
+        publish: e.boundTarget.getAttribute("data-event")
+
+      });
+
+    });
+
+  }
 
 });

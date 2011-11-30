@@ -1,5 +1,8 @@
 
-build
+vagrant up the server
+
+
+build scripts
 
 	app
 
@@ -26,31 +29,42 @@ create
 	module
 
 
+//	site model
 
-application
-
-	ui state: map events to levels.
-	components
-	data binding
-	vagrant the server
+loads site tree and site model data as one?
 
 
-layouts listen
-/state/change
-	section layouts match 
-	forward
+//	system initialisation events
+
+/system/app/loaded
+/system/ui/initialised
+/system/data/loaded
+
+//  upon app instantiaton, if it has record bindings, fire an event to get that data
+//  collect all the get data events and push them into a when() and fire
+//  /system/data/loaded event upon completion
 
 
-section layouts then forward && apps listen to
-/state/data-list/:data-template-id/update
-/state/data-record/:data-template-id/update
-/state/user-list/:data-template-id/update
-/state/user-record/:data-template-id/update
 
+
+//	state events
+/state/change/requested
+/state/update/requested
+/state/updated
+
+	apps listen on() to from ui.fire
+	/state/data-list/:data-template-uuid/updated
+	/state/data-record/:data-template-uuid/updated
+	/state/user-list/:data-template-uuid/updated
+	/state/user-record/:data-template-uuid/updated
+
+	apps listen once() to sys.fire
+	/bind/data-record/:data-instance-uuid
+	/bind/user-record/:data-instance-id
 
 
 apps fire
-/app/update -> fires update on all child components
+/app/updated -> fires update on all child components
 
 
 apps get bound to template ids -> when they mathch - pass the model to components
@@ -60,6 +74,11 @@ components get bound to keys
 
 navigation elements publish events
 corresponding section elements subscribe to those events
+
+
+
+
+
 
 
 

@@ -17,9 +17,9 @@ exports.proto = object.create(component, {
   html: '<p class="components text" data-region="default"></p>',
 
   //  public
-  update: function(value) {
+  update: function(data) {
     
-    this.rootNode.innerHTML = value;
+    this.rootNode.innerHTML = data;
       
   }
 

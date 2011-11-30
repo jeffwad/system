@@ -7,6 +7,7 @@
   
 */
 "use strict";
+
 var object  = require("object"),
     forEach = require("iter").forEach,
     ui      = require("/app/ui/proto").proto,
@@ -18,6 +19,16 @@ exports.proto = object.create(ui, {
   //  properties
 
   //  public
+  init: function(data) {
+    
+    ui.init.call(this, data);
+
+    this.binding = data.binding || false;
+
+    return this;
+
+  },
+
 
   /*
     @description  updates the app
@@ -25,7 +36,9 @@ exports.proto = object.create(ui, {
     @param        {object} e
   */
   update: function() {
+
     throw new Error("component must implement 'update()'");      
+
   },
 
 
@@ -40,7 +53,7 @@ exports.proto = object.create(ui, {
     @return       value
   */
   _getValue: function(state) {
-    
+
     return state.model[this.binding]().value();
 
   },
@@ -48,8 +61,8 @@ exports.proto = object.create(ui, {
 
 
   /*
-    @description  tells the apps child objects to update
-                  to be implmented by an object further 
+    @description  tells the components child objects to update
+                  to be implemented by an object further 
                   up the prototype chain if needed
     @param        {object} e
   */
