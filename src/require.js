@@ -405,6 +405,7 @@
     };
   }
 
+
   promise = {
 
     init: function() {
@@ -675,7 +676,7 @@
 
 
     fire: function(type, data) {
-      
+
       return this._fire(create(event).init(type, data));
 
     },
@@ -687,9 +688,8 @@
 
       this._handlers = {};
       for(i in this) (function(member, name) {
-        if(typeof member === "function" && /^__(.+)__$/.test(name)) {
-          var event = RegExp.$1;
-          that._handlers[event] = that.on(event, function(e) {
+        if(typeof member === "function" && /^\//.test(name)) {
+          that._handlers[name] = that.on(name, function(e) {
             that[name](e);
           });
         }
@@ -1075,13 +1075,32 @@
 
       loadCommand: function(cmdName) {
         
-        var cmd = require("/app/commands/" + cmdName) || require("/lib/commands/" + cmdName);
+        var cmd;
+
+        cmdName = "/app/commands/" + cmdName;
+        cmd = require.get(cmdName);
+        
         if(typeof cmd === "undefined") {
           throw new Error("cmd: " + cmdName + " does not exist");
         }
         return cmd;
 
+      },
+
+      loadModel: function(modelName) {
+        
+        var model;
+
+        modelName = "/app/models/" + modelName;
+        model = require.get(modelName);
+        
+        if(typeof model === "undefined") {
+          throw new Error("model: " + modelName + " does not exist");
+        }
+        return model;
+
       }
+
 
     };
     
@@ -1326,6 +1345,7 @@
     exports.on          = sys.on;
     exports.once        = sys.once;
     exports.loadCommand = sys.loadCommand;
+    exports.loadModel   = sys.loadModel;
     exports._fire       = sys._fire;
   });
   define("object", function(require, exports) {

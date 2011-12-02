@@ -1,0 +1,27 @@
+{"data": 
+  {
+    "uuid"         : "507432B8-B100-4B71-92F4-5D77126F6FBB", // site instance uuid
+    "templateUuid" : "5A491919-35CE-4436-8746-3C358405279B", // site template uuid
+    "createdOn"    : "",
+    "components"   : {
+      "title"   : {
+        "uuid"         : "D7E5AFDE-DC59-4D51-905C-B6161B67C63B", // component instance uuid
+        "templateUuid" : "854325E6-D03D-4D92-9A96-516697B4ECE7", // component template uuid
+        "createdOn"    : "",
+        "value"        : "Contact us"
+      },
+      "address" : {
+        "uuid"         : "32B438C0-C707-47CE-BC67-35A5E9A9AF43", // component instance uuid
+        "templateUuid" : "854325E6-D03D-4D92-9A96-516697B4ECE7", // component template uuid
+        "createdOn"    : "",
+        "value"        : "<p>84 Landor Rd,</p><p>London</p><p>SW9 9PE</p>"
+      },
+      "map"     : {
+        "uuid"         : "633F9BEF-6710-4449-A39E-5DEDBE58B535", // component instance uuid
+        "templateUuid" : "854325E6-D03D-4D92-9A96-516697B4ECE7", // component template uuid
+        "createdOn"    : "",
+        "value"        : "map"
+      }
+    }
+  }
+}

@@ -7,7 +7,10 @@
   
 */
 "use strict";
+
 var object  = require("object"),
+    sys     = require("sys"),
+    forEach = require("iter").forEach,
     ui      = require("/app/ui/proto").proto,
     $       = require("/lib/dom").$;
 
@@ -15,9 +18,132 @@ var object  = require("object"),
 exports.proto = object.create(ui, {
   
   //  properties
+  events: {
+    update: "/state/app/updated"
+  },
 
   //  public
 
+  /*
+    @description  set up initial params
+    @param        {object} data
+  */
+  init: function(data) {
+    
+    ui.init.call(this, data);
+
+    if(data.bindDataUuid) {
+      this._bindDataListener(data.bindDataUuid);
+    }
+
+    if(data.stateDataUuids) {
+      this._bindStateListeners(data.stateDataUuids);
+    }
+
+    return this;
+  
+  },
+
+
+
+  /*
+    @description  updates the current object, 
+                  and fires an update event to it's children
+    @param        {object} e
+  */
+  update: function(e) {
+
+    this._update(e);
+    this._updateChildren(e);
+
+  },
+
+
+ 
   //  private
+
+
+  /*
+    @description  bind data listener to this app based up it's record
+                  and dataEvent attributes
+    @param        {object} e
+  */
+  _bindDataListener: function(uuid) {
+
+    var that = this, 
+        event = "/bind/" + this.dataEvent;
+
+    sys.once(event + "/" + uuid, function(e) {
+
+      that.update(e);
+      /*if(e.data.uuid === uuid) {
+
+        //  force this into the same format as a state object
+        e.data.state = {
+          model: e.data.instance
+        };
+        that.update(e);
+      }*/
+
+    });
+    
+    sys.fire(event + "/requested", {
+      uuid: uuid
+    });
+      
+  },
+
+
+  /*
+    @description  binds state listeners to this app based up it's records
+                  and dataEvent attributes
+    @param        {object} e
+  */
+  _bindStateListeners: function(uuids) {
+
+    var that = this;
+    
+    forEach(uuids, function(uuid) {
+
+      var event = "/state/" + that.dataEvent + "/" + uuid;
+
+      that.on(event + "/updated", function(e) {
+
+        that.update(e);
+
+      });
+
+      sys.fire(event + "/requested");
+
+    });
+
+  },
+
+
+
+  /*
+    @description  updates the state of the current app
+                  to be implmented by an object further 
+                  up the prototype chain if needed
+    @param        {object} e
+  */
+  _update: function(e) {},
+
+
+
+  /*
+    @description  tells the apps child objects to update
+    @param        {object} e
+  */
+  _updateChildren: function(e) {
+
+    var that = this;
+    forEach(this.children, function(child) {
+
+      child.capture(that.events.update, e.data);
+
+    });
+
+  }
 
 });

@@ -40,10 +40,6 @@ describe("/ui/components/proto/", function() {
   it("ui/layouts/proto#init should set up it's initial properties", function() {
     
     expect(entity.hasOwnProperty("_listeners")).toEqual(true);
-    expect(entity._listeners).toEqual({
-      on:{},
-      once:{}
-    });
 
     expect(entity.uuid).toEqual("01234");
     expect(entity.children).toEqual([]);
