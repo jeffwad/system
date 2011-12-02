@@ -22,13 +22,11 @@ exports.proto = object.create(app, {
           '</header>'
         ].join(""),
 
+
+  dataEvent: "data-record"
+
   //  public
-  init: function(data) {
 
-    app.init.call(this, data);
-    return this;
-
-  }
 
 
   //  private

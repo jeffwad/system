@@ -14,6 +14,12 @@ var object     = require("object"),
       "text"  : require("/app/ui/components/text/text")
     };
 
+
+
+/*
+  @description  creates a component
+  @param        {object} data
+*/
 exports.create = function(data) {
 
   var component = components[data.object].proto;

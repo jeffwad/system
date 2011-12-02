@@ -16,6 +16,11 @@ var object  = require("object"),
     };
 
 
+
+/*
+  @description  creates a layout
+  @param        {object} data
+*/
 exports.create = function(data) {
 
   var layout = layouts[data.object].proto;

@@ -1,9 +1,9 @@
-//	er, pinched runCmds from geddy. nicely done sir.
-//	build a project, client, server and tests
-var child_process	  = require('child_process'),
-    fs						  = require('fs'),
-    ujs	            = require("uglify-js"),
-    util				    = require("util"),
+//  er, pinched runCmds from geddy. nicely done sir.
+//  build a project, client, server and tests
+var child_process   = require('child_process'),
+    fs              = require('fs'),
+    ujs             = require("uglify-js"),
+    util            = require("util"),
     builtFiles      = {};
 
 
@@ -14,14 +14,13 @@ task("default", ["build:app", "build:tests"], function() {
 });
 
 namespace("build", function() {
-	desc("Build app");
-	task("app", [], function() {
+  desc("Build app");
+  task("app", [], function() {
 
     var cmds = [
       "rm -r " + __dirname + "/htdocs",
-      "mkdir -p " + __dirname + "/htdocs"
-      //"mkdir -p " + __dirname + "/htdocs/tests/specs",
-      //"cp -r " + __dirname + "/src/tests/lib/ "  + __dirname + "/htdocs/tests/lib/"
+      "mkdir -p " + __dirname + "/htdocs",
+      "cp -r " + __dirname + "/src/api/ "  + __dirname + "/htdocs/api/"
     ];
 
     runCmds(cmds, function() {
@@ -36,18 +35,18 @@ namespace("build", function() {
 
     });
 
-	});
+  });
 
 
-	desc("Builds a single file");
-	task("file", [], function() {
+  desc("Builds a single file");
+  task("file", [], function() {
 
 
 
-	});
+  });
 
-	desc("Build tests");
-	task("tests", [], function() {
+  desc("Build tests");
+  task("tests", [], function() {
 
     var cmds = [
       //"rm -r " + __dirname + "/htdocs/tests",
@@ -64,7 +63,7 @@ namespace("build", function() {
     });
 
 
-	});
+  });
 });
 
 

@@ -1,7 +1,7 @@
 /*
-  @name:        /app/ui/apps/entry/entry
+  @name:        /app/ui/apps/record/record
 
-  @description: prototype for an entry app
+  @description: prototype for a record app
                 
   @author:      Simon Jefford
   
@@ -14,7 +14,9 @@ var object  = require("object"),
 exports.proto = object.create(app, {
   
   //  properties
-  html: '<div class="apps entry" data-region="default"></div>'
+  html: '<div class="apps record" data-region="default"></div>',
+
+  dataEvent: "data-record"
 
   //  public
 

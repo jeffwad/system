@@ -6,6 +6,8 @@
   @author:      Simon Jefford
   
 */
+"use strict";
+
 var object        = require("object"),
     iter          = require("iter"),
     string        = require("string"),
@@ -78,7 +80,7 @@ observe = (function() {
 
   return function(obj, type, func) {
     var l;  
-    l = object(observer, {
+    l = object.create(observer, {
       obj: obj,
       type: type,
       func: func
@@ -129,6 +131,7 @@ instanceEvents = {
         };
 
       }
+
       obs = map(this, function(node) {
         return observe(node, type, func);
       });
