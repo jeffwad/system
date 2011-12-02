@@ -20,31 +20,18 @@ exports.proto = object.create(command, {
 
     try {
       
-      var that = this, response;
+      var that = this;
 
-      response = record.get(data.uuid);
-
-      if(!response) {
-
-        return {
-          status: this.CMD_CANCELLED,
-          data: {}
-        };
-
-      }
-      else {
-
-        return response.then(function(instance) {
+      return record.get(data.uuid).then(function(instance) {
           
-          return {
-            status: that.CMD_OK,
-            data: {
-              uuid     : data.uuid,
-              instance : instance
-            }
-          };
-        });
-      }
+        return {
+          status: that.CMD_OK,
+          data: {
+            uuid     : data.uuid,
+            instance : instance
+          }
+        };
+      });
 
     }
     catch(e) {

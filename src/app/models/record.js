@@ -11,6 +11,7 @@
 var object    = require("object"),
     net       = require("net"),
     forEach   = require("iter").forEach,
+    promise   = require("async").promise,
     component = require("/app/models/component").proto,
     loading,
     instances,
@@ -58,19 +59,25 @@ exports.proto = {
 
 exports.get = function(uuid) {
   
+  var p;
+
+  //  if we already have our instance, return it via a promise
   if(instances[uuid]) {
-    return instances[uuid];
+    p = object.create(promise).init();
+    p.resolve(instances[uuid]);
+    return p;
   }
 
+  //  if it's loading - return the loading promise
   if(typeof loading[uuid] !== "undefined") {
-    return false;
+    return loading[uuid];
   }
 
-  loading[uuid] = uuid;
-
-  return net.get(uri + "/uuid/" + uuid, "json").then(function(response) {
-    return object.create(exports.proto).init(response.data);
-  });
+  //  other wise load it
+  return (loading[uuid] = net.get(uri + "/uuid/" + uuid, "json").then(function(response) {
+    delete loading[uuid];
+    return (instances[uuid] = object.create(exports.proto).init(response.data));
+  }));
   
 };
 

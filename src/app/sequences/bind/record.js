@@ -15,28 +15,30 @@ var object    = require("object"),
     requests = {};
     
 require("/app/commands/record/get");
+require("/app/commands/bind/record");
 
 
 seq = object.create(sequence).init(
 
   ["record/get", "execute", {
-      CMD_OK    :    ["event", "/bind/data-record"],
-      CMD_CANCELLED: ["event", "/bind/data-record/loading"],
-      CMD_ERROR :    ["event", "/system/error"]
+      CMD_OK    : ["bind/record", "execute", {
+          CMD_OK    : ["event", "/bind/data-record/success"],
+          CMD_ERROR : ["event", "/system/error"]
+        }
+      ],
+      CMD_ERROR : ["event", "/system/error"]
     }
   ]
 );
 
+//  we don't want to request the same set of data twice
 sys.on("/bind/data-record/requested", function(e) {
   
-  if(typeof requests[e.data.uuid] === "undefined") {
-
-    requests[e.data.uuid] = e;
-   
-  }
+  requests[e.data.uuid] = e;
 
 });
 
+//  process all the bindings after the ui is built
 sys.once("/system/ui/initialised", function() {
 
   forEach(requests, function(e) {

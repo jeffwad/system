@@ -73,16 +73,17 @@ exports.proto = object.create(ui, {
     var that = this, 
         event = "/bind/" + this.dataEvent;
 
-    sys.on(event, function(e) {
+    sys.once(event + "/" + uuid, function(e) {
 
-      if(e.data.uuid === uuid) {
+      that.update(e);
+      /*if(e.data.uuid === uuid) {
 
         //  force this into the same format as a state object
         e.data.state = {
           model: e.data.instance
         };
         that.update(e);
-      }
+      }*/
 
     });
     
