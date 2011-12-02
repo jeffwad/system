@@ -7,13 +7,15 @@
   
 */
 "use strict";
-var object        = require("object"),
-    sys           = require("sys"),
-    site          = require("/app/site"),
-    ui;
 
-//  build the ui from the site tree
-ui = site.build();
+var sys = require("sys");
 
-//  render the ui
-ui.render(document.body);
+//  sequences
+require("/app/sequences/site/init");
+require("/app/sequences/state/process");
+
+//  data
+require("/app/sequences/bind/record");
+
+
+sys.fire("/system/app/loaded");
