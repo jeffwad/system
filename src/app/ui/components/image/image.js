@@ -8,6 +8,7 @@
 */
 "use strict";
 var object      = require("object"),
+    forEach     = require("iter").forEach,
     component   = require("/app/ui/components/proto").proto,
     $           = require("/lib/dom").$;
 
@@ -17,10 +18,16 @@ exports.proto = object.create(component, {
   html: '<img class="components image" data-region="default"></img>',
 
   //  public
-  update: function(src) {
+  update: function(data) {
     
-    this.rootNode.setAttribute("src", src);
+    var that = this;
+
+    forEach(data, function(value, key) {
       
+      that.rootNode.setAttribute(key, value);
+      
+    });
+
   }
 
   //  private
