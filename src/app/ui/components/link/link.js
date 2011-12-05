@@ -19,11 +19,22 @@ exports.proto = object.create(component, {
   //  public
   update: function(data) {
 
-    this.rootNode.innerHTML = data;
     this.rootNode.setAttribute("data-event", this.publish);
     this.rootNode.setAttribute("href", this.publish);
 
-  }
+  },
+
   //  private
+
+
+  _getValue: function(state) {
+    
+    var value = component._getValue.call(this, state);
+    if(!value) {
+      value = this.publish;
+    }
+    return value;
+
+  }
 
 });

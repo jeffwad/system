@@ -1052,7 +1052,7 @@
         worker.onerror = function(e) { 
 
           sys.receive({
-            type: "worker.error",
+            type: "/worker/error",
             data: {
               message: e.message,
               filename: e.filename,
@@ -1085,23 +1085,8 @@
         }
         return cmd;
 
-      },
-
-      loadModel: function(modelName) {
-        
-        var model;
-
-        modelName = "/app/models/" + modelName;
-        model = require.get(modelName);
-        
-        if(typeof model === "undefined") {
-          throw new Error("model: " + modelName + " does not exist");
-        }
-        return model;
-
       }
-
-
+      
     };
     
   }());
@@ -1219,7 +1204,7 @@
 
           if(!modules[module]) {
 
-            sys.once("module.initialised." + module, function() {
+            sys.once("/module/initialised" + module, function() {
               define(moduleName, dependencies, def);
             });
             if (loading[module] || uninitialised[module]) {
@@ -1250,7 +1235,7 @@
 
           register(moduleName, exports, module);
 
-          sys.fire("module.initialised." + moduleName, exports);
+          sys.fire("/module/initialised" + moduleName, exports);
           
         }
 
@@ -1288,14 +1273,14 @@
       worker.onmessage = function(e) {
         guid = e.data.guid;
         this.postMessage({
-          type: "load.initial.module",
+          type: "/load/initial/module",
           module: module
         });
         sys.addWorker(worker);
       };
     
       // listen for the initial module event. fire callbacks waiting for the worker to initialise
-      initialModuleListener = sys.on("initial.module.loaded", function(e) {
+      initialModuleListener = sys.on("/initial/module/loaded", function(e) {
 
         if(e.data.guid === guid) {
           initialModuleListener.stop();
@@ -1324,7 +1309,7 @@
     p = create(promise).init();
     p.then(callback || false, errorback || false);
 
-    moduleLoadedListener = sys.on("module.initialised", function(e) {
+    moduleLoadedListener = sys.on("/module/initialised", function(e) {
       if(e.data.moduleName === module) {
         moduleLoadedListener.stop();
         moduleLoadedListener = null;        

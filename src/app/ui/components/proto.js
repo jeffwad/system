@@ -54,7 +54,13 @@ exports.proto = object.create(ui, {
   */
   _getValue: function(state) {
 
-    return state.model[this.binding]().value();
+    if(state.model[this.binding]) {
+
+      return state.model[this.binding]().value();
+    
+    }
+    return false;
+
 
   },
 

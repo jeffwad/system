@@ -61,7 +61,7 @@ describe("/ui/layouts/stack/proto", function() {
 
     var spy = sinon.spy(stack, "_getSelectedChild");
 
-    stack.fire("/state/control/change", {
+    stack.fire("/state/updated", {
       publish: "stack-one"
     });
 
@@ -74,7 +74,7 @@ describe("/ui/layouts/stack/proto", function() {
 
     var spy = sinon.spy(stack, "_getSelectedChild");
 
-    stack.fire("/state/control/change", {
+    stack.fire("/state/updated", {
       publish: "stack-two"
     });
 
@@ -87,7 +87,7 @@ describe("/ui/layouts/stack/proto", function() {
 
     var spy = sinon.spy(stack, "_getSelectedChild");
 
-    stack.fire("/state/control/change", {
+    stack.fire("/state/updated", {
       publish: "stack-three"
     });
 
@@ -121,9 +121,9 @@ describe("/ui/layouts/stack/proto", function() {
   });
 
 
-  it("ui/layouts/stack/proto#/state/control/change should set the currentChild to the first", function() {
+  it("ui/layouts/stack/proto#/state/updated should set the currentChild to the first", function() {
 
-    stack.fire("/state/control/change", {
+    stack.fire("/state/updated", {
       publish: "stack-one"
     });
 
@@ -131,9 +131,9 @@ describe("/ui/layouts/stack/proto", function() {
   });
 
 
-  it("ui/layouts/stack/proto#/state/control/change should set the currentChild to the second", function() {
+  it("ui/layouts/stack/proto#/state/updated should set the currentChild to the second", function() {
     
-    stack.fire("/state/control/change", {
+    stack.fire("/state/updated", {
       publish: "stack-two"
     });
 
@@ -141,9 +141,9 @@ describe("/ui/layouts/stack/proto", function() {
   });
 
 
-  it("ui/layouts/stack/proto#/state/control/change should set the currentChild to the third", function() {
+  it("ui/layouts/stack/proto#/state/updated should set the currentChild to the third", function() {
     
-    stack.fire("/state/control/change", {
+    stack.fire("/state/updated", {
       publish: "stack-three"
     });
 

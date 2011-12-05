@@ -14,7 +14,7 @@ var object  = require("object"),
 exports.proto = object.create(app, {
   
   //  properties
-  html: '<ul class="apps footer" data-region="default"></ul>',
+  html: '<footer class="apps footer" data-region="default"></footer>',
 
   dataEvent: "data-record"
 
