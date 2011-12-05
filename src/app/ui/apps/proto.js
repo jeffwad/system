@@ -97,15 +97,17 @@ exports.proto = object.create(ui, {
     
     forEach(uuids, function(uuid) {
 
-      var event = "/state/" + that.dataEvent + "/" + uuid;
+      var event = "/state/" + that.dataEvent;
 
-      that.on(event + "/updated", function(e) {
+      sys.on(event + "/" + uuid + "/updated", function(e) {
 
         that.update(e);
 
       });
 
-      sys.fire(event + "/requested");
+      sys.fire(event + "/requested", {
+        uuid: uuid
+      });
 
     });
 
@@ -115,7 +117,7 @@ exports.proto = object.create(ui, {
 
   /*
     @description  updates the state of the current app
-                  to be implmented by an object further 
+                  to be implemented by an object further 
                   up the prototype chain if needed
     @param        {object} e
   */

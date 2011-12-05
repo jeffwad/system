@@ -18,6 +18,7 @@ require("/app/sequences/state/process");
 
 //  data
 require("/app/sequences/bind/record");
+require("/app/sequences/state/list");
 
 
 sys.fire("/system/app/loaded");

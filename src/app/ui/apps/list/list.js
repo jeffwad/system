@@ -16,10 +16,14 @@ exports.proto = object.create(app, {
   //  properties
   html: '<ul class="apps list" data-region="default"></ul>',
 
-  dataEvent: "data-list"
+  dataEvent: "data-list",
 
   //  public
+  _update: function(e) {
 
+    this.rootNode.innerHTML = e.data.state;
+
+  }
   //  private
 
 });

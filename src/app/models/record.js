@@ -9,78 +9,55 @@
 "use strict";
 
 var object    = require("object"),
-    net       = require("net"),
     forEach   = require("iter").forEach,
-    promise   = require("async").promise,
-    component = require("/app/models/component").proto,
-    loading,
-    instances,
-    uri;
+    model     = require("/app/models/proto").proto,
+    component = require("/app/models/component");
 
-loading = {};
-instances = {};
 
-uri = "/api/data-record";
-
-exports.proto = {
+object.mixin(exports, object.create(model).init({
   
-  init: function(data) {
-
-    var that = this;
-
-    //  create the components
-    this._createComponents(data.components);
-    delete data.components;
-
-    forEach(data, function(value, attr) {
-      that[attr] = function() {return {value: function() {return value;}};};
-    });
-
-    instances[data.uuid] = this;
-
-    return this;
-
+  apis : {
+    get  : "/api/data-record",
+    find : "/api/data-list"
   },
 
-  _createComponents: function(components) {
-    
-    var that = this;
+  instance: {
 
-    forEach(components, function(componentData, attr) {
+    init: function(data) {
+
+      var that = this;
+
+      //  create the components
+      this._createComponents(data.components);
+      delete data.components;
+
+      forEach(data, function(value, attr) {
+        that[attr] = function() {
+          return {
+            value: function() {
+              return value;
+            }
+          };
+        };
+      });
+
+      return this;
+
+    },
+
+    _createComponents: function(components) {
       
-      that[attr] = function() {return object.create(component).init(componentData);};
+      var that = this;
 
-    });
+      forEach(components, function(componentData, attr) {
+        
+        that[attr] = function() {
+          return component.create(componentData);
+        };
 
+      });
+
+    }
   }
 
-};
-
-
-exports.get = function(uuid) {
-  
-  var p;
-
-  //  if we already have our instance, return it via a promise
-  if(instances[uuid]) {
-    p = object.create(promise).init();
-    p.resolve(instances[uuid]);
-    return p;
-  }
-
-  //  if it's loading - return the loading promise
-  if(typeof loading[uuid] !== "undefined") {
-    return loading[uuid];
-  }
-
-  //  other wise load it
-  return (loading[uuid] = net.get(uri + "/uuid/" + uuid, "json").then(function(response) {
-    delete loading[uuid];
-    return (instances[uuid] = object.create(exports.proto).init(response.data));
-  }));
-  
-};
-
-exports.find = function(data) {
-
-};
+}));

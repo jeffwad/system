@@ -141,11 +141,12 @@ exports.tree = {
             "object"    : "split-horizontal",
             "children"  : [
               {
-                "uuid"    : "29C1403F-9357-446B-AFCC-DE7A3FECC6E6",
-                "type"    : "apps",
-                "limit"   : "10",
-                "object"  : "list",
-                "children": [
+                "uuid"           : "29C1403F-9357-446B-AFCC-DE7A3FECC6E6",
+                "type"           : "apps",
+                "limit"          : "10",
+                "object"         : "list",
+                "stateDataUuids" : ["DE05D629-72C8-4B81-A24D-A67C7931E9AB"],
+                "children"       : [
                   /*{
                     "uuid"    : "",
                     "type"    : "components",
