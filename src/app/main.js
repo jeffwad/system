@@ -14,11 +14,10 @@ var sys = require("sys");
 
 //  sequences
 require("/app/sequences/site/init");
-require("/app/sequences/state/process");
-
-//  data
 require("/app/sequences/bind/record");
 require("/app/sequences/state/list");
+require("/app/sequences/state/process");
+require("/app/sequences/state/uri");
 
 
 sys.fire("/system/app/loaded");

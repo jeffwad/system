@@ -8,7 +8,10 @@
 */
 "use strict";
 
-var imap      = require("iter").imap,
+var iter      = require("iter"),
+    imap      = iter.imap,
+    forEach   = iter.forEach,
+    range     = iter.range,
     site      = require("/app/tree"),
     factories = require("/app/ui/factories");
 
@@ -33,13 +36,17 @@ function create(data) {
 
 /*
   @description  recurses through the site tree and builds a set of ui entities
+                if the recursion encounters an entity with a limit value
+                then it is generated that many times
   @param        {object} data
   @return       ui entity
 */
 function build(data, i) {
 
   var entity = create(data);
-  entity.registerChildren(imap(data.children, build));
+  forEach(range(0, data.limit || 1), function() {
+    entity.registerChildren(imap(data.children, build));
+  });
   return [entity, i];
 
 }

@@ -8,6 +8,7 @@
 */
 "use strict";
 var object  = require("object"),
+    forEach = require("iter").forEach,
     app     = require("/app/ui/apps/proto").proto,
     $       = require("/lib/dom").$;
 
@@ -19,11 +20,39 @@ exports.proto = object.create(app, {
   dataEvent: "data-list",
 
   //  public
-  _update: function(e) {
+  init: function(data) {
+  
+    app.init.call(this, data);
+    this.limit = data.limit || 1;
 
-    this.rootNode.innerHTML = e.data.state;
+    return this;
 
-  }
+  },
+
   //  private
+
+  /*
+    @description  tells the apps child objects to update
+    @param        {object} e
+  */
+  _updateChildren: function(e) {
+
+    var that = this;
+    forEach(this.children, function(child, i) {
+      
+      if(i < e.data.state.list.length) {
+
+        e.data.state.model = e.data.state.list[i];
+        
+        child.capture(that.events.update, e.data);
+        child.show();
+
+      }
+      else {
+        child.hide();
+      }
+    });
+
+  } 
 
 });

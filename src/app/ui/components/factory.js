@@ -9,9 +9,10 @@
 "use strict";
 var object     = require("object"),
     components = {
-      "image" : require("/app/ui/components/image/image"),
-      "link"  : require("/app/ui/components/link/link"),
-      "text"  : require("/app/ui/components/text/text")
+      "image"     : require("/app/ui/components/image/image"),
+      "link"      : require("/app/ui/components/link/link"),
+      "list-item" : require("/app/ui/components/list-item/list-item"),
+      "text"      : require("/app/ui/components/text/text")
     };
 
 

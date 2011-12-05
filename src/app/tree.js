@@ -147,24 +147,35 @@ exports.tree = {
                 "object"         : "list",
                 "stateDataUuids" : ["DE05D629-72C8-4B81-A24D-A67C7931E9AB"],
                 "children"       : [
-                  /*{
+                  {
                     "uuid"    : "",
                     "type"    : "components",
                     "object"  : "list-item",
                     "children": [
                       {
-                        "uuid": "",
-                        "type": "components",
-                        "object": "link"
+                        "uuid"    : "",
+                        "type"    : "components",
+                        "object"  : "link",
+                        "binding" : "title",
+                        "children": [
+                          {
+                            "uuid"    : "BA68E0B0-BE11-4E22-B3ED-014DB1B17057",
+                            "type"    : "components",
+                            "object"  : "text",
+                            "binding" : "title",
+                            "children": []
+                          }
+                        ]
                       }
                     ]
-                  }*/
+                  }
                 ]
               },
               {
                 "uuid"    : "542CE94A-7F06-4AEF-9DFE-379B50E2F1FA",
                 "type"    : "apps",
                 "object"  : "record",
+                "state"   : ["DE05D629-72C8-4B81-A24D-A67C7931E9AB"], // finish this
                 "children": []
               }
             ]

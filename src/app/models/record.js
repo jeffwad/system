@@ -41,6 +41,10 @@ object.mixin(exports, object.create(model).init({
         };
       });
 
+      this.slug = function() {
+        return this.title().value().toLowerCase().replace(/ /g, "-");
+      };
+
       return this;
 
     },

@@ -12,8 +12,9 @@ var object  = require("object"),
     events  = require("events").proto,
     event   = require("events").event,
     iter    = require("iter"),
-    some    = iter.some,
     forEach = iter.forEach,
+    range   = iter.range,
+    some    = iter.some,
     $       = require("/lib/dom").$;
 
 //  create our prototype ui entity based on the event object
@@ -253,6 +254,25 @@ exports.proto = object.create(events, {
 
   },
 
+  _renderChild: function(child) {
+
+      var container, region;
+
+      region = child.region || "default";
+      if(this.rootNode.getAttribute("data-region") === region) {
+        container = this.rootNode;
+      }
+      else {
+        container = $('*[data-region="' + region + '"]', this.rootNode)[0];
+      }
+      if(typeof container === "undefined") {
+        throw new Error(this.entityType + "#render region '" + region + "'' does not exist");
+      }
+      
+      child.render();
+      container.appendChild(child.rootNode);
+    
+  },
 
   /*
     @description  renders all registered children into the specified or default regions
@@ -260,28 +280,8 @@ exports.proto = object.create(events, {
   */
   _renderChildren: function() {
     
-    var that = this;
+    forEach(this.children, this._renderChild.bind(this));
 
-    forEach(this.children, function(child) {
-
-      var container, region;
-
-      region = child.region || "default";
-      if(that.rootNode.getAttribute("data-region") === region) {
-        container = that.rootNode;
-      }
-      else {
-        container = $('*[data-region="' + region + '"]', that.rootNode)[0];
-      }
-      if(typeof container === "undefined") {
-        throw new Error(that.entityType + "#render region '" + region + "'' does not exist");
-      }
-      
-      child.render();
-      container.appendChild(child.rootNode);
-
-    });
-    
   }
 
 

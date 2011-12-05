@@ -405,6 +405,23 @@
     };
   }
 
+  function range(start, stop, step) {
+    
+    var i = 0;
+
+    step = step || 1;
+
+    return {
+      next: function() {
+        var ret = start;
+        if(start >= stop) {
+          throw StopIteration;
+        }
+        start = start + step;
+        return [ret, i++];
+      }
+    };
+  }
 
   promise = {
 
@@ -1352,6 +1369,7 @@
     exports.pluck       = pluck;
     exports.chain       = chain;
     exports.imap        = imap;
+    exports.range       = range;
     exports.iterator    = iterator;
   });
   define("events", function(require, exports) {
