@@ -29,7 +29,7 @@ exports.proto = object.create(component, {
 
   /*
     @description  get the value of the data to be bound
-                  picks the publish uri if it exists, otherwise
+                  picks the publish url if it exists, otherwise
                   queries the stateMachine to get the value of the URL we are binding to
   */
   _getValue: function(state) {
