@@ -17,7 +17,7 @@ describe("/ui/components/proto/", function() {
 
   beforeEach(function() {
 
-    entity = object.create(components.proto).init({
+    entity = object.create(components).init({
       uuid: "01234"
     });
 
@@ -32,7 +32,7 @@ describe("/ui/components/proto/", function() {
 
   it("ui/layouts/proto#init should return an object with ui/proto on it's prototype", function() {
     
-    expect(ui.proto.isPrototypeOf(entity)).toEqual(true);
+    expect(ui.isPrototypeOf(entity)).toEqual(true);
 
   });
 

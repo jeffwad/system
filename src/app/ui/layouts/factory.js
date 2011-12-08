@@ -23,7 +23,7 @@ var object  = require("object"),
 */
 exports.create = function(data) {
 
-  var layout = layouts[data.object].proto;
+  var layout = layouts[data.object];
 
   if(typeof layout === "undefined") {
     throw new TypeError(module.path + " cannot create object: " + data.object);

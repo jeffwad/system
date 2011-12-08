@@ -42,7 +42,7 @@ var console = {};
     });
 
     //  register the initial module has loaded function with the event dispatcher
-    moduleLoadedListener = sys.on("module.initialised", function(data) {
+    moduleLoadedListener = sys.on("/module/initialised", function(data) {
 
       if(data.moduleName === initialModule) {
 
@@ -50,7 +50,7 @@ var console = {};
         moduleLoadedListener = null;
         //  post a message that the initial module has loadded
         self.postMessage({
-          type: "initial.module.loaded",
+          type: "/initial/module/loaded",
           data: {
             guid: guid
           }
@@ -68,7 +68,7 @@ var console = {};
 
     //  post the initial worker is loaded message
     self.postMessage({
-      type: "worker.loaded",
+      type: "/worker/loaded",
       guid: guid
     });
   }

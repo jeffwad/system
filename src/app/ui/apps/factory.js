@@ -25,7 +25,7 @@ var object  = require("object"),
 */
 exports.create = function(data) {
   
-  var app = apps[data.object].proto;
+  var app = apps[data.object];
 
   if(typeof app === "undefined") {
     throw new TypeError(module.path + " cannot create object: " + data.object);

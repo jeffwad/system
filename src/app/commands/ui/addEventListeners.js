@@ -10,10 +10,10 @@
 var object  = require("object"),
     sys     = require("sys"),
     promise = require("async").promise,
-    command = require("/app/commands/proto").proto;
+    command = require("/app/commands/proto");
 
 
-exports.proto = object.create(command, {
+module.exports = object.create(command, {
 
   execute: function(data) {
 

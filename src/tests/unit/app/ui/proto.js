@@ -7,9 +7,9 @@
   
 */
 "use strict";
-var object = require("object"),
-    events = require("events"),
-    ui     = require("/app/ui/proto");
+var object       = require("object"),
+    eventMachine = require("events").eventMachine,
+    ui           = require("/app/ui/proto");
 
 describe("/ui/proto", function() {
 
@@ -17,7 +17,7 @@ describe("/ui/proto", function() {
 
   beforeEach(function() {
 
-    entity = object.create(ui.proto).init({
+    entity = object.create(ui).init({
       uuid: "01234"
     });
 
@@ -30,9 +30,9 @@ describe("/ui/proto", function() {
   });
 
 
-  it("ui/proto#init should return an object with events on it's prototype", function() {
+  it("ui/proto#init should return an object with eventMachine on it's prototype", function() {
     
-    expect(events.proto.isPrototypeOf(entity)).toEqual(true);
+    expect(eventMachine.isPrototypeOf(entity)).toEqual(true);
 
   });
 
@@ -88,7 +88,7 @@ describe("/ui/proto", function() {
 
     var child;
 
-    child = object.create(ui.proto, {
+    child = object.create(ui, {
       html: "<div class=\"child\"></div>"
     }).init("child");
 
@@ -106,7 +106,7 @@ describe("/ui/proto", function() {
 
     var child;
 
-    child = object.create(ui.proto, {
+    child = object.create(ui, {
       html: "<div class=\"child\"></div>"
     }).init({
       uuid: "child",
@@ -127,7 +127,7 @@ describe("/ui/proto", function() {
 
     var child;
 
-    child = object.create(ui.proto, {
+    child = object.create(ui, {
       html: "<div class=\"child\"></div>"
     }).init("child");
 
@@ -149,7 +149,7 @@ describe("/ui/proto", function() {
 
     spy = sinon.spy(entity, "_renderChildren");
 
-    child = object.create(ui.proto, {
+    child = object.create(ui, {
       region: "cannot-be-found",
       html: "<div class=\"child\"</div>"
     }).init("child");
@@ -183,7 +183,7 @@ describe("/ui/proto", function() {
   it("ui/proto#registerChild should register a child object", function() {
     
     try{
-      entity.registerChild(object.create(ui.proto).init("child1"));
+      entity.registerChild(object.create(ui).init("child1"));
     }
     catch(e) {}  
     expect(entity.children.length).toEqual(1);
@@ -204,7 +204,7 @@ describe("/ui/proto", function() {
 
   it("ui/proto#registerParent should register a parent object", function() {
 
-    var p = object.create(ui.proto).init("parent");
+    var p = object.create(ui).init("parent");
     try{
       entity.registerParent(p);
     }
@@ -231,9 +231,9 @@ describe("/ui/proto", function() {
     
     var spy1, spy2, spy3;
 
-    entity.registerChild(object.create(ui.proto).init("child1"));
-    entity.registerChild(object.create(ui.proto).init("child2"));
-    entity.registerChild(object.create(ui.proto).init("child3"));
+    entity.registerChild(object.create(ui).init("child1"));
+    entity.registerChild(object.create(ui).init("child2"));
+    entity.registerChild(object.create(ui).init("child3"));
     
     spy1 = sinon.spy(entity.children[0], "_capture");
     spy2 = sinon.spy(entity.children[1], "_capture");
@@ -254,7 +254,7 @@ describe("/ui/proto", function() {
     
     var spy;
 
-    entity.registerParent(object.create(ui.proto).init("parent"));
+    entity.registerParent(object.create(ui).init("parent"));
     
     spy = sinon.spy(entity.parent, "_bubble");
 

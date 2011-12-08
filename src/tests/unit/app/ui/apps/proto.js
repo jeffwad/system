@@ -8,8 +8,8 @@
 */
 "use strict";
 var object  = require("object"),
-    ui      = require("/app/ui/proto").proto,
-    app     = require("/app/ui/apps/proto").proto;
+    ui      = require("/app/ui/proto"),
+    app     = require("/app/ui/apps/proto");
 
 describe("/ui/layouts/proto/", function() {
 

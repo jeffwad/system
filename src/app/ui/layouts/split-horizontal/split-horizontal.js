@@ -8,10 +8,10 @@
 */
 "use strict";
 var object  = require("object"),
-    layout  = require("/app/ui/layouts/proto").proto,
+    layout  = require("/app/ui/layouts/proto"),
     $       = require("/lib/dom").$;
 
-exports.proto = object.create(layout, {
+module.exports = object.create(layout, {
   
   //  properties
   html: '<div class="layouts split-horizontal" data-region="default"></div>'

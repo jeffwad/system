@@ -22,13 +22,13 @@ module.exports = object.create(command, {
       
       var that = this;
 
-      return record.get(data.uuid).then(function(instance) {
+      return record.find(data.uuid).then(function(list) {
           
         return {
           status: that.CMD_OK,
           data: {
-            uuid     : data.uuid,
-            instance : instance
+            uuid : data.uuid,
+            list : list
           }
         };
       });

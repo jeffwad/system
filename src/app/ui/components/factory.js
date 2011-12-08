@@ -9,9 +9,10 @@
 "use strict";
 var object     = require("object"),
     components = {
-      "image" : require("/app/ui/components/image/image"),
-      "link"  : require("/app/ui/components/link/link"),
-      "text"  : require("/app/ui/components/text/text")
+      "image"     : require("/app/ui/components/image/image"),
+      "link"      : require("/app/ui/components/link/link"),
+      "list-item" : require("/app/ui/components/list-item/list-item"),
+      "text"      : require("/app/ui/components/text/text")
     };
 
 
@@ -22,7 +23,7 @@ var object     = require("object"),
 */
 exports.create = function(data) {
 
-  var component = components[data.object].proto;
+  var component = components[data.object];
 
   if(typeof component === "undefined") {
     throw new TypeError(module.path + " cannot create object: " + data.object);

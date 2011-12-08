@@ -8,8 +8,7 @@
 */
 "use strict";
 
-var sys     = require("sys"),
-    events  = require("events");
+var sys     = require("sys");
 
 describe("sys", function() {
 

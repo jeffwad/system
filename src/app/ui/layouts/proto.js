@@ -8,11 +8,11 @@
 */
 "use strict";
 var object  = require("object"),
-    ui      = require("/app/ui/proto").proto,
+    ui      = require("/app/ui/proto"),
     $       = require("/lib/dom").$;
 
 //  create our prototype ui entity based on the ui/proto object
-exports.proto = object.create(ui, {
+module.exports = object.create(ui, {
   
   //  properties
 

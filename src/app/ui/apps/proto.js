@@ -11,11 +11,11 @@
 var object  = require("object"),
     sys     = require("sys"),
     forEach = require("iter").forEach,
-    ui      = require("/app/ui/proto").proto,
+    ui      = require("/app/ui/proto"),
     $       = require("/lib/dom").$;
 
 //  create our prototype ui entity based on the ui/proto object
-exports.proto = object.create(ui, {
+module.exports = object.create(ui, {
   
   //  properties
   events: {
@@ -76,14 +76,6 @@ exports.proto = object.create(ui, {
     sys.once(event + "/" + uuid, function(e) {
 
       that.update(e);
-      /*if(e.data.uuid === uuid) {
-
-        //  force this into the same format as a state object
-        e.data.state = {
-          model: e.data.instance
-        };
-        that.update(e);
-      }*/
 
     });
     
@@ -105,15 +97,17 @@ exports.proto = object.create(ui, {
     
     forEach(uuids, function(uuid) {
 
-      var event = "/state/" + that.dataEvent + "/" + uuid;
+      var event = "/state/" + that.dataEvent;
 
-      that.on(event + "/updated", function(e) {
+      sys.on(event + "/" + uuid + "/updated", function(e) {
 
         that.update(e);
 
       });
 
-      sys.fire(event + "/requested");
+      sys.fire(event + "/requested", {
+        uuid: uuid
+      });
 
     });
 
@@ -123,7 +117,7 @@ exports.proto = object.create(ui, {
 
   /*
     @description  updates the state of the current app
-                  to be implmented by an object further 
+                  to be implemented by an object further 
                   up the prototype chain if needed
     @param        {object} e
   */

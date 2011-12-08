@@ -59,26 +59,50 @@ exports.tree = {
           {
             "uuid"    : "20BB4072-9AAE-486F-9DEC-872A5315767B",
             "type"    : "components",
-            "publish" : "page.home",
-            "binding" : "home",
+            "publish" : "/",
             "object"  : "link",
-            "children": []
+            "binding" : "home",
+            "children": [
+              {
+                "uuid"    : "6979876D-1626-4C69-B9C5-F51B64F4D2AF",
+                "type"    : "components",
+                "object"  : "text",
+                "binding" : "home",
+                "children": []
+              }
+            ]
           },
           {
             "uuid"    : "8EA22A22-37F4-4A78-8406-B9BB9F8BDE45",
             "type"    : "components",
-            "publish" : "page.about",
-            "binding" : "about",
+            "publish" : "/about",
             "object"  : "link",
-            "children": []
+            "binding" : "about",
+            "children": [
+              {
+                "uuid"    : "6979876D-1626-4C69-B9C5-F51B64F4D2AF",
+                "type"    : "components",
+                "object"  : "text",
+                "binding" : "about",
+                "children": []
+              }
+            ]
           },
           {
             "uuid"    : "7CE36D86-63B6-46DD-A645-3EA16D90DB99",
             "type"    : "components",
-            "publish" : "page.contact",
-            "binding" : "contact",
+            "publish" : "/contact",
             "object"  : "link",
-            "children": []
+            "binding" : "contact",
+            "children": [
+              {
+                "uuid"    : "6979876D-1626-4C69-B9C5-F51B64F4D2AF",
+                "type"    : "components",
+                "object"  : "text",
+                "binding" : "contact",
+                "children": []
+              }
+            ]
           }
         ]
       },
@@ -90,7 +114,7 @@ exports.tree = {
           {
             "uuid"          : "639D8FBC-BC49-4658-84C7-518BC00405E3",
             "type"          : "apps",
-            "subscribe"     : "page.home",
+            "subscribe"     : "/",
             "object"        : "record",
             "bindDataUuid"  : "5A9580FC-234A-4C65-A066-5129E3827759",
             "children"      : [
@@ -113,20 +137,45 @@ exports.tree = {
           {
             "uuid"      : "2BB59B38-ACF6-4FE1-9A32-234834B87BC7",
             "type"      : "layouts",
-            "subscribe" : "page.about",
+            "subscribe" : "/about",
             "object"    : "split-horizontal",
             "children"  : [
               {
-                "uuid"    : "29C1403F-9357-446B-AFCC-DE7A3FECC6E6",
-                "type"    : "apps",
-                "limit"   : "10",
-                "object"  : "list",
-                "children": []
+                "uuid"           : "29C1403F-9357-446B-AFCC-DE7A3FECC6E6",
+                "type"           : "apps",
+                "limit"          : "10",
+                "object"         : "list",
+                "stateDataUuids" : ["DE05D629-72C8-4B81-A24D-A67C7931E9AB"],
+                "children"       : [
+                  {
+                    "uuid"    : "",
+                    "type"    : "components",
+                    "object"  : "list-item",
+                    "children": [
+                      {
+                        "uuid"    : "",
+                        "type"    : "components",
+                        "object"  : "link",
+                        "binding" : "title",
+                        "children": [
+                          {
+                            "uuid"    : "BA68E0B0-BE11-4E22-B3ED-014DB1B17057",
+                            "type"    : "components",
+                            "object"  : "text",
+                            "binding" : "title",
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
               },
               {
                 "uuid"    : "542CE94A-7F06-4AEF-9DFE-379B50E2F1FA",
                 "type"    : "apps",
                 "object"  : "record",
+                "state"   : ["DE05D629-72C8-4B81-A24D-A67C7931E9AB"], // finish this
                 "children": []
               }
             ]
@@ -134,7 +183,7 @@ exports.tree = {
           {
             "uuid"          : "0BBBAF06-1A31-4074-B240-436AF5A04786",
             "type"          : "apps",
-            "subscribe"     : "page.contact",
+            "subscribe"     : "/contact",
             "object"        : "record",
             "bindDataUuid"  : "507432B8-B100-4B71-92F4-5D77126F6FBB",
             "children"      : [

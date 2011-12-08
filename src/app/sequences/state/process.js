@@ -9,7 +9,7 @@
 
 var object    = require("object"),
     sys       = require("sys"),
-    sequence  = require("/app/sequences/proto").proto,
+    sequence  = require("/app/sequences/proto"),
     seq;
     
 require("/app/commands/state/changeRequest");

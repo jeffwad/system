@@ -9,10 +9,10 @@
 "use strict";
 var object  = require("object"),
     sys     = require("sys"),
-    app     = require("/app/ui/apps/proto").proto,
+    app     = require("/app/ui/apps/proto"),
     $       = require("/lib/dom").$;
 
-exports.proto = object.create(app, {
+module.exports = object.create(app, {
   
   //  properties
   html: '<nav class="apps nav" data-region="default"></nav>',

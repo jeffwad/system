@@ -8,13 +8,13 @@
 */
 "use strict";
 var object  = require("object"),
-    app     = require("/app/ui/apps/proto").proto,
+    app     = require("/app/ui/apps/proto"),
     $       = require("/lib/dom").$;
 
-exports.proto = object.create(app, {
+module.exports = object.create(app, {
   
   //  properties
-  html: '<ul class="apps footer" data-region="default"></ul>',
+  html: '<footer class="apps footer" data-region="default"></footer>',
 
   dataEvent: "data-record"
 

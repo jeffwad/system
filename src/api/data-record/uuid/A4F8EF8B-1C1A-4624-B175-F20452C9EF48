@@ -24,7 +24,7 @@
       },
       "logo"   :   {
         "uuid"         : "24C80EB4-8827-49CE-A07F-543C0D858BE2", // component instance uuid
-        "templateUuid" : "854325E6-D03D-4D92-9A96-516697B4ECE7", // component template uuid
+        "templateUuid" : "854325E6-e4de-4D92-9A96-516697B4ECE7", // component template uuid
         "createdOn"    : "",
         "value"        : {
           "src": "/img/logo.png",

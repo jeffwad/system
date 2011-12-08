@@ -8,16 +8,17 @@
 */
 "use strict";
 
-var object  = require("object"),
-    events  = require("events").proto,
-    event   = require("events").event,
-    iter    = require("iter"),
-    some    = iter.some,
-    forEach = iter.forEach,
-    $       = require("/lib/dom").$;
+var object       = require("object"),
+    events       = require("events"),
+    iter         = require("iter"),
+    $            = require("/lib/dom").$,
+    eventMachine = events.eventMachine,
+    event        = events.event,
+    forEach      = iter.forEach,
+    some         = iter.some;
 
-//  create our prototype ui entity based on the event object
-exports.proto = object.create(events, {
+//  create our prototype ui entity based on the eventMachine
+module.exports = object.create(eventMachine, {
   
   //  properties
 
@@ -30,7 +31,7 @@ exports.proto = object.create(events, {
   */
   init: function(data) {
 
-    events.init.call(this);
+    eventMachine.init.call(this);
 
     this.uuid       = data.uuid;
     this.region     = data.region || "";
@@ -105,7 +106,7 @@ exports.proto = object.create(events, {
   */
   registerChild: function(child) {
     
-    if(!exports.proto.isPrototypeOf(child)) {
+    if(!module.exports.isPrototypeOf(child)) {
       throw new TypeError("UI object must implement ui/proto");
     }
     this.children.push(child);
@@ -138,7 +139,7 @@ exports.proto = object.create(events, {
   */
   registerParent: function(parent) {
     
-    if(!exports.proto.isPrototypeOf(parent)) {
+    if(!module.exports.isPrototypeOf(parent)) {
       throw new TypeError("UI object must implement ui/proto");
     }
     this.parent = parent;
@@ -220,7 +221,7 @@ exports.proto = object.create(events, {
     var initial = e.phase ? false : true;
 
     //  call any listeners on this scope - if the event is stopped return false
-    events._fire.call(this, e);    
+    eventMachine._fire.call(this, e);    
     if(e.propogationStopped) {
       return e;
     }
@@ -254,34 +255,42 @@ exports.proto = object.create(events, {
   },
 
 
+
+  /*
+    @description  renders the given child into the specified or default regions
+                  of it's rootNode
+    @param        {object} child
+  */
+  _renderChild: function(child) {
+
+      var container, region;
+
+      region = child.region || "default";
+      if(this.rootNode.getAttribute("data-region") === region) {
+        container = this.rootNode;
+      }
+      else {
+        container = $('*[data-region="' + region + '"]', this.rootNode)[0];
+      }
+      if(typeof container === "undefined") {
+        throw new Error(this.entityType + "#render region '" + region + "'' does not exist");
+      }
+      
+      child.render();
+      container.appendChild(child.rootNode);
+    
+  },
+
+
+
   /*
     @description  renders all registered children into the specified or default regions
                   of it's rootNode
   */
   _renderChildren: function() {
     
-    var that = this;
+    forEach(this.children, this._renderChild.bind(this));
 
-    forEach(this.children, function(child) {
-
-      var container, region;
-
-      region = child.region || "default";
-      if(that.rootNode.getAttribute("data-region") === region) {
-        container = that.rootNode;
-      }
-      else {
-        container = $('*[data-region="' + region + '"]', that.rootNode)[0];
-      }
-      if(typeof container === "undefined") {
-        throw new Error(that.entityType + "#render region '" + region + "'' does not exist");
-      }
-      
-      child.render();
-      container.appendChild(child.rootNode);
-
-    });
-    
   }
 
 

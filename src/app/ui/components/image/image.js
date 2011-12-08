@@ -9,10 +9,10 @@
 "use strict";
 var object      = require("object"),
     forEach     = require("iter").forEach,
-    component   = require("/app/ui/components/proto").proto,
+    component   = require("/app/ui/components/proto"),
     $           = require("/lib/dom").$;
 
-exports.proto = object.create(component, {
+module.exports = object.create(component, {
   
   //  properties
   html: '<img class="components image" data-region="default"></img>',

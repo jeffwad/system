@@ -26,7 +26,7 @@
     define vars
 
   */ 
-  var promise, socket, event, events, sys,
+  var promise, socket, event, eventMachine, sys,
       camelCase, hyphenate, capitalise, interpolate, load;
 
 
@@ -405,6 +405,23 @@
     };
   }
 
+  function range(start, stop, step) {
+    
+    var i = 0;
+
+    step = step || 1;
+
+    return {
+      next: function() {
+        var ret = start;
+        if(start >= stop) {
+          throw StopIteration;
+        }
+        start = start + step;
+        return [ret, i++];
+      }
+    };
+  }
 
   promise = {
 
@@ -660,7 +677,7 @@
 
   }
 
-  events = {
+  eventMachine = {
     
     init: function() {
     
@@ -741,7 +758,7 @@
 
   forEach(["on", "once"], function(method) {
     
-    events[method] = function(eventName, func) {
+    eventMachine[method] = function(eventName, func) {
 
       var listener = createListener(this, method, eventName, func);
 
@@ -777,14 +794,14 @@
     }
   };
 
-  socket = create(events, {
+  socket = create(eventMachine, {
     
     init: function(uri) {
 
       var socket,
           that = this;
 
-      events.init.call(this);
+      eventMachine.init.call(this);
       //this.callProto("init");
 
       this.on("send.message", function(e) {
@@ -848,7 +865,7 @@
 
     fire: function(type, data) {
       
-      events.fire.call(this, "send.message", {
+      eventMachine.fire.call(this, "send.message", {
         type: type,
         data: data
       });
@@ -860,7 +877,7 @@
 
     close: function() {
 
-      events.fire.call(this, "close.socket");
+      eventMachine.fire.call(this, "close.socket");
       //this.callProto("fire", ["close.socket"]);
     }
 
@@ -1000,7 +1017,7 @@
     var em, workers;
 
     workers = [];
-    em = create(events).init();    
+    em = create(eventMachine).init();    
 
     sys = {
 
@@ -1052,7 +1069,7 @@
         worker.onerror = function(e) { 
 
           sys.receive({
-            type: "worker.error",
+            type: "/worker/error",
             data: {
               message: e.message,
               filename: e.filename,
@@ -1085,23 +1102,8 @@
         }
         return cmd;
 
-      },
-
-      loadModel: function(modelName) {
-        
-        var model;
-
-        modelName = "/app/models/" + modelName;
-        model = require.get(modelName);
-        
-        if(typeof model === "undefined") {
-          throw new Error("model: " + modelName + " does not exist");
-        }
-        return model;
-
       }
-
-
+      
     };
     
   }());
@@ -1219,7 +1221,7 @@
 
           if(!modules[module]) {
 
-            sys.once("module.initialised." + module, function() {
+            sys.once("/module/initialised" + module, function() {
               define(moduleName, dependencies, def);
             });
             if (loading[module] || uninitialised[module]) {
@@ -1248,9 +1250,9 @@
 
           def(require, exports, module);
 
-          register(moduleName, exports, module);
+          register(moduleName, module.exports || exports, module);
 
-          sys.fire("module.initialised." + moduleName, exports);
+          sys.fire("/module/initialised" + moduleName, exports);
           
         }
 
@@ -1288,14 +1290,14 @@
       worker.onmessage = function(e) {
         guid = e.data.guid;
         this.postMessage({
-          type: "load.initial.module",
+          type: "/load/initial/module",
           module: module
         });
         sys.addWorker(worker);
       };
     
       // listen for the initial module event. fire callbacks waiting for the worker to initialise
-      initialModuleListener = sys.on("initial.module.loaded", function(e) {
+      initialModuleListener = sys.on("/initial/module/loaded", function(e) {
 
         if(e.data.guid === guid) {
           initialModuleListener.stop();
@@ -1324,7 +1326,7 @@
     p = create(promise).init();
     p.then(callback || false, errorback || false);
 
-    moduleLoadedListener = sys.on("module.initialised", function(e) {
+    moduleLoadedListener = sys.on("/module/initialised", function(e) {
       if(e.data.moduleName === module) {
         moduleLoadedListener.stop();
         moduleLoadedListener = null;        
@@ -1367,11 +1369,12 @@
     exports.pluck       = pluck;
     exports.chain       = chain;
     exports.imap        = imap;
+    exports.range       = range;
     exports.iterator    = iterator;
   });
   define("events", function(require, exports) {
-    exports.proto   = events;
-    exports.event   = event;
+    exports.eventMachine  = eventMachine;
+    exports.event         = event;
   });
   define("async", function(require, exports) {
     exports.promise = promise;

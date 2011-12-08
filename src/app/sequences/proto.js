@@ -11,9 +11,9 @@ var object  = require("object"),
     sys     = require("sys"),
     iter    = require("iter"),
     promise = require("async").promise,
-    command = require("/app/commands/proto").proto,
+    command = require("/app/commands/proto"),
     some    = iter.some,
-    forEach = iter.forEach;    
+    forEach = iter.forEach;
     
 
 //  check that a response status exists and call "process()" with the next action
@@ -45,7 +45,7 @@ function process(step, data) {
   else {
 
     //  load the current command
-    cmd = object.create(sys.loadCommand(cmdName).proto);
+    cmd = object.create(sys.loadCommand(cmdName));
 
     //  if it isn't a command, abort
     if(!command.isPrototypeOf(cmd)) {
@@ -70,7 +70,7 @@ function process(step, data) {
 
 }
 
-exports.proto = {
+module.exports = {
   
   init: function(sequence) {
 

@@ -8,8 +8,10 @@
 */
 "use strict";
 
-var object = require("object"),
-    events = require("events");
+var object       = require("object"),
+    events       = require("events"),
+    eventMachine = events.eventMachine,
+    event        = events.event;
 
 describe("events", function() {
 
@@ -17,7 +19,7 @@ describe("events", function() {
 
   beforeEach(function() {
 
-    ev = object.create(events.proto).init();
+    ev = object.create(eventMachine).init();
 
   });
 
@@ -29,7 +31,7 @@ describe("events", function() {
 
   it("events#init should return an object with events on it's prototype", function() {
     
-    expect(events.proto.isPrototypeOf(ev)).toEqual(true);
+    expect(eventMachine.isPrototypeOf(ev)).toEqual(true);
 
   });
 
@@ -291,7 +293,7 @@ describe("events", function() {
     
     var ev, spy1, spy2;
 
-    ev = object.create(events.proto, {
+    ev = object.create(eventMachine, {
       
       "/test/auto/1": function(e) {
         

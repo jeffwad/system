@@ -1,7 +1,7 @@
 /*
-  @name:        /app/sequences/bind/record
+  @name:        /app/sequences/state/list
 
-  @description: requests a data record for one off binding to an app
+  @description: requests a data list
 
   @author:      Simon Jefford
  */
@@ -14,15 +14,15 @@ var object    = require("object"),
     seq,
     requests = {};
     
-require("/app/commands/record/get");
-require("/app/commands/bind/record");
+require("/app/commands/record/find");
+require("/app/commands/state/listUpdate");
 
 
 seq = object.create(sequence).init(
 
-  ["record/get", "execute", {
-      CMD_OK    : ["bind/record", "execute", {
-          CMD_OK    : ["event", "/bind/data-record/success"],
+  ["record/find", "execute", {
+      CMD_OK    : ["state/listUpdate", "execute", {
+          CMD_OK    : ["event", "/state/data-list/success"],
           CMD_ERROR : ["event", "/system/error"]
         }
       ],
@@ -32,7 +32,7 @@ seq = object.create(sequence).init(
 );
 
 //  we don't want to request the same set of data twice
-sys.on("/bind/data-record/requested", function(e) {
+sys.on("/state/data-list/requested", function(e) {
   
   requests[e.data.uuid] = e;
 

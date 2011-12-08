@@ -1,7 +1,7 @@
 /*
-  @name:        /app/commands/bind/record
+  @name:        /app/commands/state/listUpdate
 
-  @description: fires a uuid specific bind record event
+  @description: fires a uuid specific state list update event
 
   @author:      Simon Jefford
  */
@@ -18,9 +18,9 @@ module.exports = object.create(command, {
 
     try {
       
-      sys.fire("/bind/data-record/" + data.uuid, {
+      sys.fire("/state/data-list/" + data.uuid + "/updated", {
         state: {
-          model: data.instance
+          list: data.list
         }
       });
 

@@ -10,11 +10,11 @@
 
 var object  = require("object"),
     forEach = require("iter").forEach,
-    ui      = require("/app/ui/proto").proto,
+    ui      = require("/app/ui/proto"),
     $       = require("/lib/dom").$;
 
 //  create our prototype ui entity based on the ui/proto object
-exports.proto = object.create(ui, {
+module.exports = object.create(ui, {
   
   //  properties
 
@@ -54,7 +54,13 @@ exports.proto = object.create(ui, {
   */
   _getValue: function(state) {
 
-    return state.model[this.binding]().value();
+    if(state.model[this.binding]) {
+
+      return state.model[this.binding]().value();
+    
+    }
+    return false;
+
 
   },
 

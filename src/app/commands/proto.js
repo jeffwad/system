@@ -12,7 +12,7 @@ var sys     = require("sys"),
     forEach = require("iter").forEach;
 
 
-exports.proto = {
+module.exports = {
   
   CMD_OK            : "CMD_OK",
   CMD_CANCELLED     : "CMD_CANCELLED",

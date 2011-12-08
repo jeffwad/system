@@ -9,45 +9,30 @@
 "use strict";
 
 var object    = require("object"),
-    net       = require("net"),
-    forEach   = require("iter").forEach,
-    instances,
-    uri;
+    model     = require("/app/models/proto"),
+    forEach   = require("iter").forEach;
 
-instances = [];
 
-uri = "/api/data-component";
-
-exports.proto = {
+module.exports = object.create(model).init({
   
-  init: function(data) {
+  apis : {
+    get: "/api/data-component"
+  },
 
-    var that = this;
+  instance: {
 
-    forEach(data, function(value, attr) {
+    init: function(data) {
 
-      that[attr] = function() {return value;};
+      var that = this;
 
-    });
+      forEach(data, function(value, attr) {
 
-    instances.push(this);
+        that[attr] = function() {return value;};
 
-    return this;
+      });
 
+      return this;
+
+    }
   }
-
-};
-
-
-
-exports.get = function(uuid) {
-
-  return net.get(uri + "/uuid/" + uuid, "json").then(function(response) {
-    return object.create(exports.proto).init(response.data);
-  });
-  
-};
-
-exports.find = function(data) {
-
-};
+});

@@ -8,10 +8,11 @@
 */
 "use strict";
 var object      = require("object"),
-    component   = require("/app/ui/components/proto").proto,
+    sys         = require("sys"),
+    component   = require("/app/ui/components/proto"),
     $           = require("/lib/dom").$;
 
-exports.proto = object.create(component, {
+module.exports = object.create(component, {
   
   //  properties
   html: '<a class="components link" data-region="default"></a>',
@@ -19,11 +20,31 @@ exports.proto = object.create(component, {
   //  public
   update: function(data) {
 
-    this.rootNode.innerHTML = data;
-    this.rootNode.setAttribute("data-event", this.publish);
-    this.rootNode.setAttribute("href", this.publish);
+    this.rootNode.setAttribute("data-event", data);
+    this.rootNode.setAttribute("href", data);
+
+  },
+
+  //  private
+
+  /*
+    @description  get the value of the data to be bound
+                  picks the publish url if it exists, otherwise
+                  queries the stateMachine to get the value of the URL we are binding to
+  */
+  _getValue: function(state) {
+    
+    var e;
+
+    if(this.publish) {
+      return this.publish;
+    }
+
+    e = sys.fire("/state/uri/requested", {
+      state: state
+    });
+    return e.data.state.uri;
 
   }
-  //  private
 
 });
