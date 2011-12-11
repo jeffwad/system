@@ -40,6 +40,8 @@ module.exports = object.create(eventMachine, {
     this.entityType = data.type + "/" + data.object;
     this.children   = [];
 
+    this._updateStateMachine();
+
     return this;
 
   },
@@ -291,7 +293,30 @@ module.exports = object.create(eventMachine, {
     
     forEach(this.children, this._renderChild.bind(this));
 
+  },
+
+
+
+  /*
+    @description  fires an event that the state sequences, command and machine
+                  use to build an internal representation of the possible states
+                  of the system. The above mentioned objects use this information to
+                  build URI's from the heirarchy of publish/subscribe states
+                  and the types of data to be found under each
+  */
+  _updateStateMachine: function(uuids) {
+
+    if(this.stateDataUuids) {
+      state.unshift(p.stateDataUuids);
+    }
+    if(p.subscribe) {
+      state.unshift(p.subscribe);
+    }
+
+    console.log("wtf: ", state);
+
   }
+
 
 
 });

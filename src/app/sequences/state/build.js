@@ -7,13 +7,13 @@
  */
 "use strict";
 
+require("/app/commands/state/build");
+
 var object    = require("object"),
     sys       = require("sys"),
     sequence  = require("/app/sequences/proto"),
     seq;
-    
-require("/app/commands/state/build");
-
+  
 
 seq = object.create(sequence).init(
 

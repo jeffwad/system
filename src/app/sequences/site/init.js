@@ -7,14 +7,15 @@
  */
 "use strict";
 
+require("/app/commands/ui/build");
+require("/app/commands/ui/addEventListeners");
+
+
 var object    = require("object"),
     sys       = require("sys"),
     sequence  = require("/app/sequences/proto"),
     seq;
     
-require("/app/commands/ui/build");
-require("/app/commands/ui/addEventListeners");
-
 
 seq = object.create(sequence).init(
 

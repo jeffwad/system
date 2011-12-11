@@ -7,15 +7,15 @@
  */
 "use strict";
 
+require("/app/commands/record/find");
+require("/app/commands/state/listUpdate");
+
 var object    = require("object"),
     sys       = require("sys"),
     forEach   = require("iter").forEach,
     sequence  = require("/app/sequences/proto"),
     seq,
     requests = {};
-    
-require("/app/commands/record/find");
-require("/app/commands/state/listUpdate");
 
 
 seq = object.create(sequence).init(

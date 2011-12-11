@@ -23,7 +23,6 @@ module.exports = object.create(app, {
   init: function(data) {
   
     app.init.call(this, data);
-    this.limit = data.limit || 1;
 
     return this;
 

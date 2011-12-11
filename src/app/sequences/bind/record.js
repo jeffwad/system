@@ -7,15 +7,15 @@
  */
 "use strict";
 
+require("/app/commands/record/get");
+require("/app/commands/bind/record");
+
 var object    = require("object"),
     sys       = require("sys"),
     forEach   = require("iter").forEach,
     sequence  = require("/app/sequences/proto"),
     seq,
     requests = {};
-    
-require("/app/commands/record/get");
-require("/app/commands/bind/record");
 
 
 seq = object.create(sequence).init(

@@ -33,11 +33,15 @@ module.exports = object.create(ui, {
     ui.init.call(this, data);
 
     if(data.bindDataUuid) {
+
       this._bindDataListener(data.bindDataUuid);
+    
     }
 
     if(data.stateDataUuids) {
+
       this._bindStateListeners(data.stateDataUuids);
+
     }
 
     return this;
